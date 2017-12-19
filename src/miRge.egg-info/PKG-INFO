@@ -1,0 +1,121 @@
+Metadata-Version: 1.1
+Name: miRge
+Version: 2.0
+Summary: comprehensive analysis of miRNA sequencing data
+Home-page: https://github...
+Author: Yin Lu
+Author-email: ylu61@jhmi.edu
+License: MIT
+Description: miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of 
+        Bowtie (http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (http://samtools.sourceforge.net/) and RNAfold (http://www.tbi.univie.ac.at/RNA)
+        Python (v2.7.*) programming language and Python-relate libraries,
+        including cutadapt(v1.11), biopython(v1.68), sklearn(v0.18.1), numPy(v1.11.0), SciPy(v0.17.0)
+        pandas(v0.18.0), reportlab(v3.3.0) and forgi(v0.20).
+        
+        To successfully run miRge2.0, please
+        1) Download and install Bowtie (http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (http://samtools.sourceforge.net/) and RNAfold (http://www.tbi.univie.ac.at/RNA).
+        2) Run modul_check.py to systematically install requisite libraries.
+        3) Run build_lib.py to build bowtie index files 
+        4) Run build_pckls.py to transform ***_genome_repeats.GTF and ***_genome.fa in oder to accelerate the speed of reading larg files into memory.
+        5) Make sure the essential library files disposed at the proper directory.Library file structures.
+           There are three directories: index.Libs, annotation.Libs and fasta.Libs located at the parent direcotory of each species.
+        6) Add the absolute path of miRge2.0.py to the environmental variable PATH in Linux/Unix.
+        
+        miRge2.0 has two module: annotate and predict.
+        
+        1)annotate mode:
+        
+        Usage: miRge2.0.py annotate [-h] [<args>]
+        
+        Example:
+        miRge2.0.py annotate -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1/ -lib /home/yin/miRge.Libs/ -sp human -ad illumina -ai -gff -cpu 4
+        
+        optional arguments:
+          -h, --help            show this help message and exit
+          -s [sample <required> [sample <required> ...]]
+                                Two options: 1. A file where each row represents one
+                                sample name; 2. *.fastq, *fastq, ...
+          -d <string required>  The miRNA database (default: miRBase. miRGeneDB is
+                                optional)
+          -pb <dir required>    The path to the system's bowtie binary
+          -lib <dir required>   The path to the miRge libraries
+          -sp <string required>
+                                The species can be human, mouse, fruitfly, nematode,
+                                rat and zebrafish (novle miRNA detection is confined
+                                in human and mouse)
+          -ad <string>          The adapter need to be removed which could be
+                                illumina, ion or a defined sequence (default: none)
+          -phred64              phred64 format(default: 64)
+          -spikeIn              switch to annotate spike-ins if the bowtie index files
+                                are loacted at the path of bowtie's index
+                                files(default: off)
+          -tcf                  switch to write trimmed and collapsed fasta file
+                                (default: off)
+          -di                   switch to calculate of isomirs entropy (default: off)
+          -cpu <int>            the number of processors to use for trimming, qc, and
+                                alignment (default: 1)
+          -ai                   switch to calculate of A to I editing (default: off)
+          -gff                  switch to output results in gff format (default: off)
+          --version             show program's version number and exit
+        
+        
+        2) predict mode:
+        
+        Usage: miRge2.0.py predict [-h] [<args>]
+        
+        Example:
+        miRge2.0.py predict -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1/ -lib /home/yin/miRge.Libs/ -ps /usr/local/bin/ -pr /usr/local/bin/ -sp human -ad illumina -ai -gff -cpu 4
+        
+        optional arguments:
+          -h, --help            show this help message and exit
+          -s [sample <required> [sample <required> ...]]
+                                Two options: 1. A file where each row represents one
+                                sample name; 2. *.fastq, *fastq, ...
+          -d <string required>  The miRNA database (default: miRBase. miRGeneDB is
+                                optional)
+          -pb <dir required>    The path to the system's bowtie binary
+          -lib <dir required>   The path to the miRge libraries
+          -sp <string required>
+                                The species can be human, mouse, fruitfly, nematode,
+                                rat and zebrafish (novle miRNA detection is confined
+                                in human and mouse)
+          -ps <dir required>    The path to the system's samtools binary
+          -pr <dir required>    The path to the system's rnafold binary
+          -ad <string>          The adapter need to be removed which could be
+                                illumina, ion or a defined sequence (default: none)
+          -phred64              phred64 format(default: 64)
+          -spikeIn              switch to annotate spike-ins if the bowtie index files
+                                are loacted at the path of bowtie's index
+                                files(default: off)
+          -tcf                  switch to write trimmed and collapsed fasta file
+                                (default: off)
+          -di                   switch to calculate of isomirs entropy (default: off)
+          -cpu <int>            the number of processors to use for trimming, qc, and
+                                alignment (default: 1)
+          -ai                   switch to calculate of A to I editing (default: off)
+          -gff                  switch to output results in gff format (default: off)
+          -ws <file>            the file containing the overall samples to analysis
+                                for novel miRNA prediction
+                                (GodenStandardSampleList.txt)
+          -minl <int>           the minimum length of the reatined reads (default: 16)
+          -maxl <int>           the maximum length of the reatined reads (default: 25)
+          -cc <int>             the maximum read count of the reatined reads (default:
+                                2)
+          -ml <int>             the maximum number of mapping loci for the retained
+                                reads (default: 3)
+          -sl <int>             the seed length when invoking Bowtie (default: 25)
+          -olc <int>            the length of overlapped seqence when joining reads
+                                into longer sequences based on the coordinate on the
+                                genome (default: 14)
+          -clc <int>            the maximum length of the clustered sequences
+                                (default: 30)
+          --version             show program's version number and exit
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics

@@ -1,0 +1,3 @@
+[console_scripts]
+miRge = miRge.__main__:main
+
