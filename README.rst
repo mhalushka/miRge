@@ -1,8 +1,9 @@
 miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of 
 Bowtie (http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (http://samtools.sourceforge.net/) and RNAfold (http://www.tbi.univie.ac.at/RNA)
+
+
 Python (v2.7.*) programming language and Python-relate libraries,
-including cutadapt(v1.11), biopython(v1.68), sklearn(v0.18.1), numPy(v1.11.0), SciPy(v0.17.0)
-pandas(v0.18.0), reportlab(v3.3.0) and forgi(v0.20).
+including cutadapt(v1.11), biopython(v1.68), numpy(v1.13.3), scipy(v0.17.0), matplotlib(v2.1.1), pandas(v0.18.0), sklearn(v0.18.1), reportlab(v3.3.0) and forgi(v0.20).
 
 To successfully run miRge2.0, please
 1) Download and install Bowtie (http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (http://samtools.sourceforge.net/) and RNAfold (http://www.tbi.univie.ac.at/RNA).
