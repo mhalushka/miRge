@@ -1,0 +1,3 @@
+include src/miRge/models/*.pkl
+include src/miRge/models/*.txt
+include src/miRge/rSciprts/*.R
