@@ -28,12 +28,12 @@ setup(
 	license='MIT',
 	package_dir={'': 'src'},
 	packages=find_packages('src', exclude=['.txt']),
-	package_data = {'mirge':['models/*.pkl', 'models/*.txt', 'rSciprts/*.R']},
+	package_data = {'mirge':['models/*.pkl', 'models/*.txt', 'rScripts/*.R']},
 	install_requires=['cutadapt==1.11', 'biopython==1.68', 'numpy==1.13.3',
 	'scipy==0.17.0', 'matplotlib==2.1.1', 'pandas==0.18.0','scikit-learn==0.18.1',
 	'reportlab==3.3.0', 'forgi==0.20'
 	],
-	entry_points={'console_scripts': ['miRge = mirge.__main__:main']},
+	entry_points={'console_scripts': ['miRge2.0 = mirge.__main__:main']},
 	classifiers=[
 		"Development Status :: 3 - Alpha",
 		"Environment :: Console",
