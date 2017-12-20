@@ -71,7 +71,14 @@ def main():
 	# Preprocess the inout arguments
 	sampleListTmp = args.sampleList
 	dir = os.path.abspath(args.output_dir)
-	miRNA_database = args.miRNA_database
+	if args.miRNA_database.lower() in ['mirbase', 'mirgenedb']:
+		if args.miRNA_database.lower() == 'mirbase':
+			miRNA_database = 'miRBase'
+		else:
+			miRNA_database = 'miRGeneDB'
+	else:
+		print >> sys.stderr, "The value of parameter '-d' is invalid. Please check it"
+		sys.exit(1)
 	bowtieBinary = args.bowtieBinary
 	libraryPath = args.libraryPath
 	species = args.species
