@@ -1,9 +1,0 @@
-cutadapt==1.11
-biopython==1.68
-numpy==1.13.3
-scipy==0.17.0
-matplotlib==2.1.1
-pandas==0.18.0
-scikit-learn==0.18.1
-reportlab==3.3.0
-forgi==0.20
