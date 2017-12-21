@@ -12,7 +12,7 @@ Documentation
   * [Annoate mode](#annotate-mode)
   * [Predict mode](#predict-mode)
 * [Changelog](#changelog)
-* [Further information](#further-information)
+* [Citation](#citation)
 
 Installation
 ------------
@@ -130,5 +130,5 @@ miRge2.0 has two module: annotate and predict.
 Changelog
 ---------
 
-Further information
-===================
+Citation
+========
