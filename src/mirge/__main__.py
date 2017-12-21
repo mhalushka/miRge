@@ -80,6 +80,25 @@ def main():
 		print >> sys.stderr, "The value of parameter '-d' is invalid. Please check it"
 		sys.exit(1)
 	bowtieBinary = args.bowtieBinary
+	# Check the binarys directory to make sure it can work
+	executable1 = find_executable(os.path.join(bowtieBinary, 'bowtie'))
+	if not executable1:
+		print >> sys.stderr, "bowtie can't be found in %s. Please check it."%(bowtieBinary)
+		sys.exit(1)
+	if sys.argv[1] == 'predict':
+		samtoolsBinaryTmp = args.samtoolsBinary
+		rnafoldBinaryTmp = args.rnafoldBinary
+		executable2 = find_executable(os.path.join(samtoolsBinaryTmp, 'samtools'))
+		executable3 = find_executable(os.path.join(rnafoldBinaryTmp, 'RNAfold'))
+		if (not executable2) or (not executable3):
+			if not executable2:
+				print >> sys.stderr, "samtools can't be found in %s. Please check it."%(samtoolsBinaryTmp)
+			else:
+				pass
+			if not executable3:
+				print >> sys.stderr, "RNAfold can't be found in %s. Please check it."%(rnafoldBinaryTmp)
+			sys.exit(1)
+	
 	libraryPath = args.libraryPath
 	species = args.species
 	indexPath = os.path.join(libraryPath, species, 'index.Libs')
@@ -234,7 +253,7 @@ def main():
 		print 'It takes: %.2fs'%(time_3-time_1)
 	
 	# perform annotation
-	print '\nPerform annotation for all of the collasped sequences...'
+	print '\nPerforming annotation for all of the collasped sequences...'
 	time_4 = time.time()
 	numCPU_new = '1'
 	runAnnotationPipeline(bowtieBinary, seqDic, numCPU_new, phred64, annotNameList, outputdir, logDic, mirna_index, hairpin_index, tRNA_index, snoRNA_index, rRNA_index, ncrna_others_index, mrna_index, spikeIn, spikeIn_index, gff_output, miRNamePreNameDic, isomiRContentDic)
@@ -242,7 +261,7 @@ def main():
 	print 'All annotation cycles completed (%.2f sec).\n'%(time_5-time_4)
 
 	# Summerize and tabulate the results
-	print "Summarizing and tabulating results ..."
+	print "Summarizing and tabulating results..."
 	summarize(seqDic, sampleList, logDic, mirDic, mirna_index, outputdir, spikeIn)
 
 	miRNAmerge(mergeLibFile, sampleList, mirDic, miRNA_fa, mirNameSeqDic)
@@ -258,7 +277,7 @@ def main():
 
 	if sys.argv[1] == 'predict':
 		time_7 = time.time()
-		print '\nPerform predition of novel miRNAs ...'
+		print '\nPerforming prediction of novel miRNAs...'
 		print 'Start to predict'
 		samtoolsBinary = args.samtoolsBinary
 		rnafoldBinary = args.rnafoldBinary
