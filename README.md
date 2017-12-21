@@ -11,7 +11,7 @@ Documentation
 * [How to use it](#how-to-use-it)
   * [Annoate mode](#annotate-mode)
   * [Predict mode](#predict-mode)
-* [Changelog]
+* [Changelog](#changelog)
 * [Further information](#further-information)
 
 Installation
