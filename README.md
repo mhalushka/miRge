@@ -30,12 +30,11 @@ In each species, there are three folders: index.Libs (libraries Part a), fasta.L
 
 ### Install miRge2.0
 
-miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of Bowtie (http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (http://samtools.sourceforge.net/) and RNAfold (http://www.tbi.univie.ac.at/RNA).
-It was built with Python (v2.7.*) programming language and Python-relate libraries, including cutadapt(v1.11), biopython(v1.68), numpy(v1.11.3), scipy(v0.17.0), matplotlib(v2.1.1), pandas(v0.21.0), sklearn(v0.18.1), reportlab(v3.3.0) and forgi(v0.20).
-The source code is hosted at: https://github.com/mhalushka/miRge-2.0 
-miRge2.0 is available in Bioconda, so the quick installation is to run:
-1) conda install mirge
-2) pip install forgi==0.20 (Since currently forgi is not available in conda)
+miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of Bowtie (http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (http://samtools.sourceforge.net/) and RNAfold (http://www.tbi.univie.ac.at/RNA). <br />
+It was built with Python (v2.7.*) programming language and Python-relate libraries, including cutadapt(v1.11), biopython(v1.68), numpy(v1.11.3), scipy(v0.17.0), matplotlib(v2.1.1), pandas(v0.21.0), sklearn(v0.18.1), reportlab(v3.3.0) and forgi(v0.20). <br />
+The source code is hosted at: https://github.com/mhalushka/miRge-2.0. miRge2.0 is available in Bioconda, so the quick installation is to run:<br />
+1) conda install mirge<br />
+2) pip install forgi==0.20 (Since currently forgi is not available in conda)<br />
 
 How to use it
 -------------
