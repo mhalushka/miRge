@@ -21,10 +21,9 @@ Installation
 ### Download libraries
 
 miRge2.0 relies on a huge number of libraries like:
-
-a) Bowtie indexes of genome, hairping, mature miRNAs in miRBase, mature miRNAs in miRGeneDB, mRNA, rRNA, snoRNA, tRNA, other ncRNA and spike-in sequeces (optional).
-b) Sequeces of genome, mature miRNAs (including SNP information) in miRBase and miRGeneDB.
-c) Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase and miRGeneDB.
+a) Bowtie indexes of genome, hairping, mature miRNAs in miRBase, mature miRNAs in miRGeneDB, mRNA, rRNA, snoRNA, tRNA, other ncRNA and spike-in sequeces (optional)
+b) Sequeces of genome, mature miRNAs (including SNP information) in miRBase and miRGeneDB
+c) Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase and miRGeneDB
 
 Libraries of six species including human, mouse, rat, zebrafish, nematode and fruitfly can be downloaded from: https://jh.box.com/s/wfe2wyhpmutxtu74np6pr1ulas0bgzbi.
 In each species, there are three folders: index.Libs (libraries Part a), fasta.Libs (libraries Part b) and annotation.Libs (libraries Part c).
