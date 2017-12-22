@@ -21,9 +21,9 @@ Installation
 ### Download libraries
 
 miRge2.0 relies on a huge number of libraries like: <br />
-a) Bowtie indexes of genome, hairping, mature miRNAs in miRBase, mature miRNAs in miRGeneDB, mRNA, rRNA, snoRNA, tRNA, other ncRNA and spike-in sequeces (optional) <br />
-b) Sequeces of genome, mature miRNAs (including SNP information) in miRBase and miRGeneDB <br />
-c) Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase and miRGeneDB <br />
+a. Bowtie indexes of genome, hairping, mature miRNAs in miRBase, mature miRNAs in miRGeneDB, mRNA, rRNA, snoRNA, tRNA, other ncRNA and spike-in sequeces (optional) <br />
+b. Sequeces of genome, mature miRNAs (including SNP information) in miRBase and miRGeneDB <br />
+c. Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase and miRGeneDB <br />
 
 Libraries of six species including human, mouse, rat, zebrafish, nematode and fruitfly can be downloaded from: https://jh.box.com/s/wfe2wyhpmutxtu74np6pr1ulas0bgzbi.
 In each species, there are three folders: index.Libs (libraries Part a), fasta.Libs (libraries Part b) and annotation.Libs (libraries Part c).
@@ -33,8 +33,8 @@ In each species, there are three folders: index.Libs (libraries Part a), fasta.L
 miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of Bowtie (http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (http://samtools.sourceforge.net/) and RNAfold (http://www.tbi.univie.ac.at/RNA). <br />
 It was built with Python (v2.7.*) programming language and Python-relate libraries, including cutadapt(v1.11), biopython(v1.68), numpy(v1.11.3), scipy(v0.17.0), matplotlib(v2.1.1), pandas(v0.21.0), sklearn(v0.18.1), reportlab(v3.3.0) and forgi(v0.20). <br />
 The source code is hosted at: https://github.com/mhalushka/miRge-2.0. miRge2.0 is available in Bioconda, so the quick installation is to run:<br />
-1) conda install mirge<br />
-2) pip install forgi==0.20 (Since currently forgi is not available in conda)<br />
+1. conda install mirge<br />
+2. pip install forgi==0.20 (Since currently forgi is not available in conda)<br />
 
 How to use it
 -------------
