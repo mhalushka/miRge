@@ -8,31 +8,36 @@ Documentation
 -------------
 
 * [Installation](#installation)
+  * [Download libraries](#download-libraries)
+  * [Install miRge2.0](#download-libraries)
 * [How to use it](#how-to-use-it)
   * [Annoate mode](#annotate-mode)
   * [Predict mode](#predict-mode)
-* [Changelog](#changelog)
 * [Citation](#citation)
 
 Installation
 ------------
-that requires pre-installation of 
-Bowtie (http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (http://samtools.sourceforge.net/) and RNAfold (http://www.tbi.univie.ac.at/RNA)
 
+Download libraries
+------------------
 
-Python (v2.7.*) programming language and Python-relate libraries,
-including cutadapt(v1.11), biopython(v1.68), numpy(v1.13.3), scipy(v0.17.0), matplotlib(v2.1.1), pandas(v0.18.0), sklearn(v0.18.1), reportlab(v3.3.0) and forgi(v0.20).
+miRge2.0 relies on a huge number of libraries like:
+a) Bowtie indexes of genome, hairping, mature miRNAs in miRBase, mature miRNAs in miRGeneDB, mRNA, rRNA, snoRNA, tRNA, other ncRNA and spike-in sequeces (optional).
+b) Sequeces of genome, mature miRNAs (including SNP information) in miRBase and miRGeneDB.
+c) Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase and miRGeneDB.
 
-To successfully run miRge2.0, please
-1) Download and install Bowtie (http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (http://samtools.sourceforge.net/) and RNAfold (http://www.tbi.univie.ac.at/RNA).
-2) Run modul_check.py to systematically install requisite libraries.
-3) Run build_lib.py to build bowtie index files 
-4) Run build_pckls.py to transform ***_genome_repeats.GTF and ***_genome.fa in oder to accelerate the speed of reading larg files into memory.
-5) Make sure the essential library files disposed at the proper directory.Library file structures.
-   There are three directories: index.Libs, annotation.Libs and fasta.Libs located at the parent direcotory of each species.
-6) Add the absolute path of miRge2.0.py to the environmental variable PATH in Linux/Unix.
+Libraries of six species including human, mouse, rat, zebrafish, nematode and fruitfly can be downloaded from: https://jh.box.com/s/wfe2wyhpmutxtu74np6pr1ulas0bgzbi.
+In each species, there are three folders: index.Libs (libraries Part a), fasta.Libs (libraries Part b) and annotation.Libs (libraries Part c).
 
+Install miRge2.0
+----------------
 
+miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of Bowtie (http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (http://samtools.sourceforge.net/) and RNAfold (http://www.tbi.univie.ac.at/RNA).
+It was built with Python (v2.7.*) programming language and Python-relate libraries, including cutadapt(v1.11), biopython(v1.68), numpy(v1.11.3), scipy(v0.17.0), matplotlib(v2.1.1), pandas(v0.21.0), sklearn(v0.18.1), reportlab(v3.3.0) and forgi(v0.20).
+The source code is hosted at: https://github.com/mhalushka/miRge-2.0 
+miRge2.0 is available in Bioconda, so the quick installation is to run:
+1) conda install mirge
+2) pip install forgi==0.20 (Since currently forgi is not available in conda)
 
 How to use it
 -------------
@@ -127,8 +132,7 @@ miRge2.0 has two module: annotate and predict.
                             (default: 30)
       --version             show program's version number and exit
 
-Changelog
----------
-
 Citation
-========
+--------
+
+Yin Lu, Alexander S. Baras, Marc K Halushka. miRge2.0: An updated tool to comprehensively analyze microRNA sequencing data. bioRxiv.org.
