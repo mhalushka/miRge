@@ -60,7 +60,7 @@ miRge2.0 has two module: annotate and predict.
       -lib <dir required>   the path to the miRge libraries
       -sp <string required>
                             the species can be human, mouse, fruitfly, nematode,
-                            rat and zebrafish (novle miRNA detection is confined
+                            rat and zebrafish (novel miRNA detection is confined
                             in human and mouse)
       -ad <string>          the adapter need to be removed which could be
                             illumina, ion or a defined sequence (default: none)
@@ -96,7 +96,7 @@ miRge2.0 has two module: annotate and predict.
       -lib <dir required>   the path to the miRge libraries
       -sp <string required>
                             the species can be human, mouse, fruitfly, nematode,
-                            rat and zebrafish (novle miRNA detection is confined
+                            rat and zebrafish (novel miRNA detection is confined
                             in human and mouse)
       -ps <dir required>    the path to the system's samtools binary
       -pr <dir required>    the path to the system's rnafold binary
