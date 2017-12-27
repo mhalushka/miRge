@@ -36,6 +36,8 @@ It was built with Python (v2.7.*) programming language and Python-relate librari
 The source code is hosted at: https://github.com/mhalushka/miRge-2.0. miRge2.0 is available in Bioconda, so the quick installation is to run:<br />
 1) conda install mirge<br />
 2) pip install forgi==0.20 (Since currently forgi is not available in conda)<br />
+Or install miRge2.0 directly from the source code by running python setup.py install.
+
 
 How to use it
 -------------
