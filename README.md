@@ -33,7 +33,7 @@ Scripts miRge_bowtie_build.py and miRge_pckls_build.py can be downloaded from: ?
 
 miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of Bowtie (v1.1.1; http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (v1.5; http://samtools.sourceforge.net/) and RNAfold (v2.3.5; http://www.tbi.univie.ac.at/RNA). <br />
 It was built with Python (v2.7.*) programming language and Python-relate libraries, including cutadapt(v1.11), biopython(v1.68), numpy(v1.11.3), scipy(v0.17.0), matplotlib(v2.1.1), pandas(v0.21.0), sklearn(v0.18.1), reportlab(v3.3.0) and forgi(v0.20). <br />
-The source code is hosted at: https://github.com/mhalushka/miRge-2.0. Users can install miRge2.0 directly from the source code by running python setup.py install. miRge2.0 is available in Bioconda as well, so the quick installation is to run:<br />
+The source code is hosted at: https://github.com/mhalushka/miRge-2.0. Users can install miRge2.0 directly from the source code by running "python setup.py install". miRge2.0 is available in Bioconda as well, so the quick installation is to run:<br />
 1) conda install mirge<br />
 2) pip install forgi==0.20 (Since currently forgi is not available in conda)<br />
 
