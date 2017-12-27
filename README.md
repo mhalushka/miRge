@@ -42,7 +42,7 @@ If you do not use bioconda, miRge2.0 can also be installed from the source code 
 
 ### Troubleshooting installation<br />
 miRge2.0 was tested on the specific version of required softwares and python packages. Please make sure the version is correct.<br />
-1) If Bowtie, SAMtools or RNAfold have been already installed in the system, Running "which bowtie", "which samtools" or "which RNAfold" to find their installation paths. If the versions are incorrect, please install them with right version. 
+1) If Bowtie, SAMtools or RNAfold have been already installed in the system, please run "which bowtie", "which samtools" or "which RNAfold" to find their installation paths. If the versions are incorrect, please install them with right version. 
 2) Running "pip freeze" to check th version of current python packages. If some python packages can't work, please mannually install them by running 'pip install package==*.**'.<br />
 
 How to use it
