@@ -10,6 +10,7 @@ Documentation
 * [Installation](#installation)
   * [Download libraries](#download-libraries)
   * [Install miRge2.0](#download-libraries)
+  * [Troubleshooting installation](#troubleshooting-installation)
 * [How to use it](#how-to-use-it)
   * [Annoate mode](#annotate-mode)
   * [Predict mode](#predict-mode)
@@ -27,16 +28,22 @@ miRge2.0 relies on a huge number of libraries like: <br />
 
 Libraries of six species including human, mouse, rat, zebrafish, nematode and fruitfly can be downloaded from: https://jh.box.com/s/wfe2wyhpmutxtu74np6pr1ulas0bgzbi.
 In each species, there are three folders: index.Libs (libraries Part 1), fasta.Libs (libraries Part 2) and annotation.Libs (libraries Part 3).<br />
-Scripts miRge_bowtie_build.py and miRge_pckls_build.py can be downloaded from: ???link in jh.box, wherein miRge_bowtie_build.py is used to build bowtie index files and miRge_pckls_build.py is used to transform ***_genome_repeats.GTF and ***_genome.fa in oder to accelerate the speed of reading larg files into memory. 
+Scripts miRge_bowtie_build.py and miRge_pckls_build.py can be downloaded from https://github.com/mhalushka/miRge2.0_build, wherein miRge_bowtie_build.py is used to build bowtie index files and miRge_pckls_build.py is used to transform ***_genome_repeats.GTF and ***_genome.fa in oder to accelerate the speed of reading larg files into memory. 
 
 ### Install miRge2.0
 
 miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of Bowtie (v1.1.1; http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (v1.5; http://samtools.sourceforge.net/) and RNAfold (v2.3.5; http://www.tbi.univie.ac.at/RNA). <br />
 It was built with Python (v2.7.*) programming language and Python-relate libraries, including cutadapt(v1.11), biopython(v1.68), numpy(v1.11.3), scipy(v0.17.0), matplotlib(v2.1.1), pandas(v0.21.0), sklearn(v0.18.1), reportlab(v3.3.0) and forgi(v0.20). <br />
-The source code is hosted at: https://github.com/mhalushka/miRge-2.0. Users can install miRge2.0 directly from the source code by running "python setup.py install". miRge2.0 is available in Bioconda as well, so the quick installation is to run:<br />
+The source code is hosted at: https://github.com/mhalushka/miRge-2.0. miRge2.0 is available in Bioconda as well, so the quick installation is to run:<br />
 1) conda install mirge<br />
 2) pip install forgi==0.20 (Since currently forgi is not available in conda)<br />
 
+If you do not use bioconda, miRge2.0 can also be installed from the source code by running "python setup.py install".
+
+### Troubleshooting installation<br />
+miRge2.0 was tested on the specific version of required softwares and python packages. Please make sure the version is correct.<br />
+1) If Bowtie, SAMtools or RNAfold have been already installed in the system, Running "which bowtie", "which samtools" or "which RNAfold" to find their installation paths. If the versions are incorrect, please install them with right version. 
+2) Running "pip freeze" to check th version of current python packages. If some python packages can't work, please mannually install them by running 'pip install package==*.**'.<br />
 
 How to use it
 -------------
