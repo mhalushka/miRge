@@ -14,7 +14,7 @@ if sys.version_info < (2, 7):
 	sys.exit(1)
 
 # Get the long description from the README file
-with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'README.rst')) as f:
+with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'README.md')) as f:
 	long_description = f.read()
 
 setup(
@@ -35,7 +35,7 @@ setup(
 	],
 	entry_points={'console_scripts': ['miRge2.0 = mirge.__main__:main']},
 	classifiers=[
-		"Development Status :: 3 - Alpha",
+		"Development Status :: 1 - Alpha",
 		"Environment :: Console",
 		"Intended Audience :: Science/Research",
 		"License :: OSI Approved :: MIT License",
