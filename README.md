@@ -38,7 +38,10 @@ The source code is hosted at: https://github.com/mhalushka/miRge-2.0. miRge2.0 i
 1) conda install mirge<br />
 2) pip install forgi==0.20 (Since currently forgi is not available in conda)<br />
 
-If you do not use bioconda, miRge2.0 can also be installed from the source code by running "python setup.py install".
+If you do not use bioconda, miRge2.0 can also be installed by pip:
+1) python setup.py bdist_wheel
+2) cd ./dist
+3) pip install mirge-2.0-py2-none-any.whl
 
 ### Troubleshooting installation<br />
 miRge2.0 was tested on the specific version of required softwares and python packages. Please make sure the version is correct.<br />
