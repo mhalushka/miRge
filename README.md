@@ -33,13 +33,13 @@ Scripts miRge_bowtie_build.py and miRge_pckls_build.py can be downloaded from ht
 ### Install miRge2.0
 
 miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of Bowtie (v1.1.1; http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (v1.5; http://samtools.sourceforge.net/) and RNAfold (v2.3.5; http://www.tbi.univie.ac.at/RNA). <br />
-It was built with Python (v2.7.*) programming language and Python-relate libraries, including cutadapt(v1.11), biopython(v1.68), numpy(v1.11.3), scipy(v0.17.0), matplotlib(v2.1.1), pandas(v0.21.0), sklearn(v0.18.1), reportlab(v3.3.0) and forgi(v0.20). <br />
+It was built with Python (v2.7.*) programming language and Python-related libraries, including cutadapt(v1.11), biopython(v1.68), numpy(v1.11.3), scipy(v0.17.0), matplotlib(v2.1.1), pandas(v0.21.0), sklearn(v0.18.1), reportlab(v3.3.0) and forgi(v0.20). <br />
 The source code is hosted at: https://github.com/mhalushka/miRge-2.0.<br />
-miRge2.0 can be installed by pip:<br />
-1) pip install wheel (if package of wheel is not installed)
-1) python setup.py bdist_wheel<br />
-2) cd ./dist<br />
-3) pip install mirge-2.0-py2-none-any.whl<br />
+miRge2.0 can be installed from the source code by pip:<br />
+1) Download miRge2.0 source code from https://github.com/mhalushka/miRge-2.0 and unzip the zipped file folder.<br />
+2) If the package of wheel is not installed, run "pip install wheel" to install it.<br />
+3) Change the directory to miRge2.0's directory and run "python setup.py bdist_wheel" to build a wheel file for the subsequent installation via pip.<br />
+4) Run "pip install ./dist/mirge-2.0-py2-none-any.whl" to install miRge2.0.<br />
 
 miRge2.0 will be in Bioconda as well (in process), the installation is to run:<br />
 1) conda install mirge<br />
