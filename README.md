@@ -51,6 +51,9 @@ miRge2.0 will be in Bioconda as well (in process), the installation is to run:<b
 miRge2.0 was tested on the specific version of required softwares and python packages. Please make sure the version is correct.<br />
 1) If Bowtie, SAMtools or RNAfold have been already installed in the system, please run "which bowtie", "which samtools" or "which RNAfold" to find their installation paths. If the versions are incorrect, please install them with right version. 
 2) Running "pip freeze" to check th version of current python packages. If some python packages can't work, please mannually install them by running 'pip install package==*.**'.<br />
+3) If the required python pacakages of the specific version can't be installed by pip, make sure the installed python is complied by 4-byte Unicode so that pip can install UCS4 wheels (supporting cp27mu not cp27m). Type python and enter following commands "import sys" "print  sys.maxunicode". If output is 1114111 then it is UCS4 otherwise if output is 65535 then it is UCS2.<br />
+   If it is UCS2, please re-compile already installed python with 4-bype Unicode from the source code by running: a) "./configure --enable-unicode=ucs4 --prefix=***" b) "make" c) "make install" <br />
+   
 
 How to use it
 -------------
