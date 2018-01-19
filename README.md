@@ -27,8 +27,7 @@ miRge2.0 relies on a huge number of libraries like: <br />
 3) Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase and miRGeneDB <br />
 
 Libraries of six species including human, mouse, rat, zebrafish, nematode and fruitfly can be downloaded from: https://jh.box.com/s/wfe2wyhpmutxtu74np6pr1ulas0bgzbi.
-After unpacking the downloaded miRge.Libs.tar.gz file, there are six folders for six species respectively. Each folder contains three folders: index.Libs (libraries Part 1), fasta.Libs (libraries Part 2) and annotation.Libs (libraries Part 3).<br />
-The absolute directory of miRge.Libs is used as the value of parameter ‘-lib’ in miRge2.0. <br />
+After unpacking the downloaded miRge.Libs.tar.gz file, there are six folders for six species respectively. Each folder contains three folders: index.Libs (libraries Part 1), fasta.Libs (libraries Part 2) and annotation.Libs (libraries Part 3). The absolute directory of miRge.Libs is used as the value of parameter ‘-lib’ in miRge2.0. <br />
 If the users want to build the libraries for other species, they can use scripts miRge_bowtie_build.py and miRge_pckls_build.py which can be downloaded from https://github.com/mhalushka/miRge2.0_build, wherein miRge_bowtie_build.py is used to build bowtie index files and miRge_pckls_build.py is used to transform ***_genome_repeats.GTF and ***_genome.fa in oder to accelerate the speed of reading larg files into memory. 
 
 ### Install miRge2.0
