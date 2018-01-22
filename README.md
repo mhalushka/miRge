@@ -37,22 +37,22 @@ It was built with Python (v2.7.*) programming language and Python-related librar
 The source code is hosted at: https://github.com/mhalushka/miRge-2.0.<br />
 miRge2.0 can be installed from the source code by pip:<br />
 1) Download miRge2.0 source code from https://github.com/mhalushka/miRge-2.0 and unzip the zipped file folder.<br />
-2) If the package of wheel is not installed, run "pip install wheel" to install it.<br />
-3) Change the directory to miRge2.0's directory and run "python setup.py bdist_wheel" to build a wheel file for the subsequent installation via pip.<br />
-4) Run "pip install ./dist/mirge-2.0-py2-none-any.whl" to install miRge2.0.<br />
+2) If the package of wheel is not installed, run `pip install wheel` to install it.<br />
+3) Change the directory to miRge2.0's directory and run `python setup.py bdist_wheel` to build a wheel file for the subsequent installation via pip.<br />
+4) Run `pip install ./dist/mirge-2.0-py2-none-any.whl` to install miRge2.0.<br />
 
 miRge2.0 will be in Bioconda as well (in process), the installation is to run:<br />
 1) `conda install mirge`<br />
-2) pip install forgi==0.20 (since currently forgi is not available in conda)<br />
+2) `pip install forgi==0.20` (since currently forgi is not available in conda)<br />
 
 
 
 ### Troubleshooting installation<br />
 miRge2.0 was tested on the specific version of required softwares and python packages. Please make sure the version is correct.<br />
-1) If Bowtie, SAMtools or RNAfold have been already installed in the system, please run "which bowtie", "which samtools" or "which RNAfold" to find their installation paths. If the versions are incorrect, please install them with right version. 
-2) Running "pip freeze" to check th version of current python packages. If some python packages can't work, please mannually install them by running 'pip install package==*.**'.<br />
-3) If the required python pacakages of the specific version can't be installed by pip or imported by python, make sure the installed python is complied by 4-byte Unicode so that pip can install UCS4 wheels (supporting cp27mu not cp27m). Type python and enter following commands "import sys" "print  sys.maxunicode". If output is 1114111 then it is UCS4 otherwise if output is 65535 then it is UCS2.<br />
-   If it is UCS2, please re-compile already installed python with 4-bype Unicode from the source code by running: a) "./configure --enable-unicode=ucs4 --prefix=***" b) "make" c) "make install" <br />
+1) If Bowtie, SAMtools or RNAfold have been already installed in the system, please run `which bowtie`, `which samtools` or `which RNAfold` to find their installation paths. If the versions are incorrect, please install them with right version. 
+2) Running `pip freeze` to check th version of current python packages. If some python packages can't work, please mannually install them by running `pip install package==*.**`.<br />
+3) If the required python pacakages of the specific version can't be installed by pip or imported by python, make sure the installed python is complied by 4-byte Unicode so that pip can install UCS4 wheels (supporting cp27mu not cp27m). Type python and enter following commands `import sys` `print  sys.maxunicode`. If output is 1114111 then it is UCS4 otherwise if output is 65535 then it is UCS2.<br />
+   If it is UCS2, please re-compile already installed python with 4-bype Unicode from the source code by running: a) `./configure --enable-unicode=ucs4 --prefix=***` b) `make` c) `make install` <br />
    
 
 How to use it
