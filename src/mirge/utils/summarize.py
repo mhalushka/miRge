@@ -1,8 +1,8 @@
 import os
 
-def summarize(seqDic, sampleList, logDic, mirDic, file_mirna, outputdir, spikeIn):
+def summarize(seqDic, sampleList, logDic, mirDic, file_mirna, outputdir, spikeIn, bowtieBinary):
 	mirList = []
-	os.system('bowtie-inspect -n '+file_mirna+' > '+os.path.join(outputdir, 'mirnaList.tmp'))
+	os.system(os.path.join(bowtieBinary, 'bowtie-inspect')+' -n '+file_mirna+' > '+os.path.join(outputdir, 'mirnaList.tmp'))
 	with open(os.path.join(outputdir, 'mirnaList.tmp'), 'r') as inf:
 		for line in inf:
 			mirList.append(line.strip())
@@ -12,7 +12,6 @@ def summarize(seqDic, sampleList, logDic, mirDic, file_mirna, outputdir, spikeIn
 		mirDic.update({mirList[i]:{}})
 		mirDic[mirList[i]].update({'quant': [0]*len(sampleList)})
 		mirDic[mirList[i]].update({'iscan': [0]*len(sampleList)})
-	
 	for i in range(len(sampleList)):
 		logDic['quantStats'][i].update({'trimmedUniq': 0})
 		logDic['quantStats'][i].update({'mirnaReads': 0})

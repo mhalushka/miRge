@@ -140,7 +140,7 @@ def make_cigar(seq, mature):
 		if seq[pos] == mature[pos]:
 			cigar += "M"
 		elif seq[pos] != mature[pos] and seq[pos] != "-" and mature[pos] != "-":
-			cigar += mature[pos]
+			cigar += seq[pos]
 		elif seq[pos] == "-":
 			cigar += "D"
 		elif mature[pos] == "-":
@@ -217,12 +217,16 @@ def analyzeAlignment(preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut):
 		if leftDashCount(readSeqOut) > leftDashCount(mirnaSeqOut):
 			iso_5p_status = True
 		elif leftDashCount(readSeqOut) < leftDashCount(mirnaSeqOut):
-			iso_5p_status = True
+			#iso_5p_status = True
 			iso_5p_seq_start = leftDashCount(readSeqOut)
 			iso_5p_seq = readSeqOut[iso_5p_seq_start:start1]
 			refer_5p_seq = preMiRSeqOut[iso_5p_seq_start:start1]
 			if iso_5p_seq != refer_5p_seq:
-				iso_add_status = True
+				#iso_add_status = True
+				iso_5p_status = True
+				iso_snp_status = True
+			else:
+				iso_5p_status = True
 		else:
 			pass
 		# judge whether the read belongs to iso_3p_status
@@ -230,12 +234,14 @@ def analyzeAlignment(preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut):
 		if rightDashCount(readSeqOut) > rightDashCount(mirnaSeqOut):
 			iso_3p_status = True
 		elif rightDashCount(readSeqOut) < rightDashCount(mirnaSeqOut):
-			iso_3p_status = True
+			#iso_3p_status = True
 			iso_3p_seq_end = len(readSeqOut)-rightDashCount(readSeqOut)-1
 			iso_3p_seq = readSeqOut[end1:iso_3p_seq_end+1]
 			refer_3p_seq = preMiRSeqOut[end1:iso_3p_seq_end+1]
 			if iso_3p_seq != refer_3p_seq:
 				iso_add_status = True
+			else:
+				iso_3p_status = True
 		else:
 			pass
 		if iso_snp_status:

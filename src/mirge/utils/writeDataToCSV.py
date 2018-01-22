@@ -603,7 +603,7 @@ def writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, log
 					except KeyError:
 						retainedSeqContentDicTmp.update({content[0]:[content[-1].count(':')]})
 		
-		os.system('rm %s %s'%(os.path.join(outputdir, 'SeqToMap.sam'), os.path.join(outputdir, 'SeqToMap.log')))
+		os.system('rm %s %s %s'%(os.path.join(outputdir, 'SeqToMap.sam'), os.path.join(outputdir, 'SeqToMap.log'), os.path.join(outputdir, 'SeqToMap.fasta')))
 		for seq_tmp in retainedSeqContentDicTmp.keys():
 			kept = False
 			content = retainedSeqContentDicTmp[seq_tmp]
