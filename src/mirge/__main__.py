@@ -262,7 +262,7 @@ def main():
 
 	# Summerize and tabulate the results
 	print "Summarizing and tabulating results..."
-	summarize(seqDic, sampleList, logDic, mirDic, mirna_index, outputdir, spikeIn)
+	summarize(seqDic, sampleList, logDic, mirDic, mirna_index, outputdir, spikeIn, bowtieBinary)
 
 	miRNAmerge(mergeLibFile, sampleList, mirDic, miRNA_fa, mirNameSeqDic)
 
@@ -451,7 +451,12 @@ def main():
 								%(bwtCmdTmp, os.path.join(outputdirTemp, os.path.splitext(file)[0]+'_representative_seq'), fileNameTemp, seedLength, outfile4, outLogTemp))
 
 						# Generate the reads that can't align to the cluster reads.
-						split_fasta_from_sam(outfile4+'_tmp1.sam', fileNameTemp)
+						try:
+							split_fasta_from_sam(outfile4+'_tmp1.sam', fileNameTemp)
+						except IOError:
+							print 'No cluster sequences are generated and prediction is aborted.'
+							os.system('rm -r %s'%(outputdir2))
+							sys.exit(1)
 
 						# Align the rest part of reads to the cluster sequences with up to 1 mismatches with special 5 vs 3 prime considerations.
 						# The alignments in the best stratum are those having the least number of mismatches.
@@ -526,6 +531,7 @@ def main():
 								print 'Prediction of novel miRNAs Completed (%.2f sec)'%(time_8-time_7)
 							else:
 								print "model file and feature namelist files don't exsit at: %s and %s\nPlease check them."%(os.path.join(modelDir, 'svc_model.pkl'), os.path.join(modelDir, 'total_features_namelist.txt'))
+			os.system('rm -r %s'%(outputdir2))
 
 if __name__ == '__main__':
 	main()
