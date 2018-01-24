@@ -101,7 +101,7 @@ miRge2.0 has two module: annotate and predict.
     Usage: miRge2.0 predict [-h] [<args>]
 
     Example:
-    miRge2.0.py predict -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -ps /usr/local/bin -pr /usr/local/bin -sp human -ad illumina -ai -gff -cpu 4
+    miRge2.0 predict -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -ps /usr/local/bin -pr /usr/local/bin -sp human -ad illumina -ai -gff -cpu 4
 
     optional arguments:
       -h, --help            show this help message and exit
