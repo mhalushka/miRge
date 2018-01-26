@@ -409,7 +409,7 @@ def runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, 
 		bwtCmd+file_rRNA+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
 		bwtCmd+file_ncrna_others+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
 		bwtCmd+file_mrna+' -n 0 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
-		bwtCmd+file_mirna+' -l 15 -5 1 -3 2 -n 1 -f --norc --best -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
+		bwtCmd+file_mirna+' -5 1 -3 2 -v 2 -f --norc --best -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
 		bwtCmd+file_spikeIn+' -n 0 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log')]
 	else:
 		lengthFilters = [-26, 25, 0, 0, 0, 0, 0, 0]
@@ -421,7 +421,7 @@ def runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, 
 		bwtCmd+file_rRNA+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
 		bwtCmd+file_ncrna_others+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
 		bwtCmd+file_mrna+' -n 0 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
-		bwtCmd+file_mirna+' -l 15 -5 1 -3 2 -n 1 -f --norc --best -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log')]
+		bwtCmd+file_mirna+' -5 1 -3 2 -v 2 -f --norc --best -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log')]
 
 	# -- ALIGNMENT 1 -- length < 26, up to 0 mismatch to miRNA
 	# -- ALIGNMENT 2 -- length > 25, up to 1 mismatch to hairpin
