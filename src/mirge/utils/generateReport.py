@@ -72,6 +72,10 @@ class TableBarChart2(_DrawingEditorMixin,Drawing):
 		self.chart.valueAxis.labels.fontName = 'Helvetica-Bold'
 		xListNew = []
 		interval = (max([int(item) for item in xList])-min([int(item) for item in xList]))/10
+		if interval == 0:
+			interval = (max([int(item) for item in xList])-min([int(item) for item in xList]))/5
+			if interval == 0:
+				interval = max([int(item) for item in xList])-min([int(item) for item in xList])
 		for i in range(len(xList)):
 			if i%interval == 0:
 				xListNew.append(xList[i])
