@@ -262,6 +262,8 @@ def analyzeAlignment(preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut):
 		pre_start = leftDashCount(readSeqOut)+1
 	pre_end = pre_start + len(readSeqOut)-leftDashCount(readSeqOut)-rightDashCount(readSeqOut)-1
 	
+	pre_start = pre_start -3
+	pre_end = pre_end -3
 	start2 = leftDashCount(readSeqOut)
 	end2 = len(readSeqOut)-rightDashCount(readSeqOut)-1
 	readSeqOut_extract = readSeqOut[start2:end2+1]
