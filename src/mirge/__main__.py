@@ -255,8 +255,8 @@ def main():
 	# perform annotation
 	print '\nPerforming annotation for all of the collasped sequences...'
 	time_4 = time.time()
-	numCPU_new = '1'
-	runAnnotationPipeline(bowtieBinary, seqDic, numCPU_new, phred64, annotNameList, outputdir, logDic, mirna_index, hairpin_index, tRNA_index, snoRNA_index, rRNA_index, ncrna_others_index, mrna_index, spikeIn, spikeIn_index, gff_output, miRNamePreNameDic, isomiRContentDic)
+	#numCPU_new = '1'
+	runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, outputdir, logDic, mirna_index, hairpin_index, tRNA_index, snoRNA_index, rRNA_index, ncrna_others_index, mrna_index, spikeIn, spikeIn_index, gff_output, miRNamePreNameDic, isomiRContentDic)
 	time_5 = time.time()
 	print 'All annotation cycles completed (%.2f sec).\n'%(time_5-time_4)
 
