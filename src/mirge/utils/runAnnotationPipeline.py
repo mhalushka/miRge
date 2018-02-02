@@ -397,6 +397,7 @@ def writeSeqToAnnot(lengthFilter, seqDic, outputdir):
 
 def runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, outputdir, logDic, file_mirna, file_hairpin, file_tRNA, file_snoRNA, file_rRNA, file_ncrna_others, file_mrna, spikeIn, file_spikeIn, gff_output, miRNamePreNameDic, isomiRContentDic):
 	bwtCmd = os.path.join(bowtieBinary, 'bowtie')+' --threads '+numCPU+' '
+	bwtCmd2 = os.path.join(bowtieBinary, 'bowtie-inspect ')
 	#bwtCmd = bowtieBinary+"bowtie --threads "+numCPU+' '
 	#bwtCmd = "bowtie --threads "+numCPU+' '
 	if(phred64):
@@ -433,8 +434,8 @@ def runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, 
 	# -- ALIGNMENT (9) -- any length, up to 0 mismatches to spike-in 
 	if gff_output:
 		#if i == 0 or i == 7:
-		os.system('bowtie-inspect '+file_hairpin+' > '+os.path.join(outputdir, 'hairpinTmp.fa'))
-		os.system('bowtie-inspect '+file_mirna+' > '+os.path.join(outputdir, 'mirnaTmp.fa'))
+		os.system(bwtCmd2+file_hairpin+' > '+os.path.join(outputdir, 'hairpinTmp.fa'))
+		os.system(bwtCmd2+file_mirna+' > '+os.path.join(outputdir, 'mirnaTmp.fa'))
 		hairpinNameSeqDic = {}
 		mirnaLibNameSeqDic = {}
 		for record in SeqIO.parse(os.path.join(outputdir, 'hairpinTmp.fa'), 'fasta'):
