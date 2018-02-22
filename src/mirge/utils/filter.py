@@ -1,10 +1,15 @@
 import sys
 
-def filter(mirDic, sampleList, logDic):
+def filter(mirDic, sampleList, logDic, canoRatioTmp):
 	iscanFilter = 2
+	canoRatioThreshold = float(canoRatioTmp)
 	for mirKey in mirDic.keys():
 		for i in range(len(sampleList)):
-			if mirDic[mirKey]['iscan'][i] < iscanFilter:
+			try:
+				canoRatioValue = float(mirDic[mirKey]['iscan'][i])/mirDic[mirKey]['quant'][i]
+			except ZeroDivisionError:
+				canoRatioValue = 1.1
+			if mirDic[mirKey]['iscan'][i] < iscanFilter or canoRatioValue < canoRatioThreshold:
 				mirDic[mirKey]['quant'][i] = 0
 	for mirKey in mirDic.keys():
 		for i in range(len(sampleList)):
