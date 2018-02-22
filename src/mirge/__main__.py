@@ -113,6 +113,7 @@ def main():
 			for item in line_content[1:]:
 				mirMergedNameDic.update({item:line_content[0]})
 
+	canoRatio =args.canoRatio
 	adapter = args.adapter
 	if adapter == 'illumina':
 		adapter = 'TGGAATTCTCGGGTGCCAAGGAACTCCAG'
@@ -266,7 +267,7 @@ def main():
 
 	miRNAmerge(mergeLibFile, sampleList, mirDic, miRNA_fa, mirNameSeqDic)
 
-	filter(mirDic, sampleList, logDic)
+	filter(mirDic, sampleList, logDic, canoRatio)
 
 	generateReport(outputdir, sampleList, readLengthDic, logDic, annotNameList, seqDic, spikeIn)
 	
