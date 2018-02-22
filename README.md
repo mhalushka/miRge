@@ -14,6 +14,7 @@ Documentation
 * [How to use it](#how-to-use-it)
   * [Annoate mode](#annotate-mode)
   * [Predict mode](#predict-mode)
+* [Changelog] (#Changelog)
 * [Citation](#citation)
 
 Installation
@@ -157,6 +158,11 @@ miRge2.0 has two module: annotate and predict.
       -clc <int>            the maximum length of the clustered sequences for novel miRNA
                             detection (default: 30)
       --version             show program's version number and exit
+
+Changelog
+---------
+
+
 
 Citation
 --------
