@@ -14,7 +14,7 @@ Documentation
 * [How to use it](#how-to-use-it)
   * [Annoate mode](#annotate-mode)
   * [Predict mode](#predict-mode)
-* [Changelog](#Changelog)
+* [Changelog](#changelog)
 * [Citation](#citation)
 
 Installation
@@ -159,11 +159,10 @@ miRge2.0 has two module: annotate and predict.
                             detection (default: 30)
       --version             show program's version number and exit
 
-
 Changelog
 ---------
 
-02-22-2018    Add a `-ex` option, if the canonical reads count is less than 2 or the proportion of canonical reads is less that the set threshold, the miRNA will not be counted in the ouput files: miR.Counts.csv and miR.RPM.csv.
+**02-22-2018**  Add a `-ex` option, if the canonical reads count is less than 2 or the proportion of canonical reads is less that the set threshold, the miRNA will not be counted in the ouput files: miR.Counts.csv and miR.RPM.csv.
 
 
 Citation
