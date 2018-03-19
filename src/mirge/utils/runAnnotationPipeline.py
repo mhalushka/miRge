@@ -210,12 +210,23 @@ def analyzeAlignment(preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut):
 		for i in range(start1, end1):
 			if readSeqOut[i] != '-' and readSeqOut[i] != mirnaSeqOut[i]:
 				iso_snp_status = True
+				if i >=1 and i <= 6:
+					iso_snp_pos = '_seed'
+				elif i == 7:
+					iso_snp_pos = '_central_offset'
+				elif i >= 8 and i <= 11:
+					iso_snp_pos = '_central'
+				elif i >=12 and i <= 16:
+					iso_snp_pos = 'central_supp'
+				else:
+					iso_snp_pos = ''
 				break
 		# juge whether the read belongs to iso_5p
 		iso_5p_status = False
 		iso_add_status = False
 		if leftDashCount(readSeqOut) > leftDashCount(mirnaSeqOut):
 			iso_5p_status = True
+			iso_5p_pos = str(leftDashCount(mirnaSeqOut)-leftDashCount(readSeqOut))
 		elif leftDashCount(readSeqOut) < leftDashCount(mirnaSeqOut):
 			#iso_5p_status = True
 			iso_5p_seq_start = leftDashCount(readSeqOut)
@@ -224,15 +235,19 @@ def analyzeAlignment(preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut):
 			if iso_5p_seq != refer_5p_seq:
 				#iso_add_status = True
 				iso_5p_status = True
+				iso_5p_pos = '+'+str(leftDashCount(mirnaSeqOut)-leftDashCount(readSeqOut))
 				iso_snp_status = True
+				iso_snp_pos = ''
 			else:
 				iso_5p_status = True
+				iso_5p_pos = '+'+str(leftDashCount(mirnaSeqOut)-leftDashCount(readSeqOut))
 		else:
 			pass
 		# judge whether the read belongs to iso_3p_status
 		iso_3p_status = False
 		if rightDashCount(readSeqOut) > rightDashCount(mirnaSeqOut):
 			iso_3p_status = True
+			iso_3p_pos = str(rightDashCount(mirnaSeqOut)-rightDashCount(readSeqOut))
 		elif rightDashCount(readSeqOut) < rightDashCount(mirnaSeqOut):
 			#iso_3p_status = True
 			iso_3p_seq_end = len(readSeqOut)-rightDashCount(readSeqOut)-1
@@ -240,18 +255,20 @@ def analyzeAlignment(preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut):
 			refer_3p_seq = preMiRSeqOut[end1:iso_3p_seq_end+1]
 			if iso_3p_seq != refer_3p_seq:
 				iso_add_status = True
+				iso_add_pos = '+'+str(rightDashCount(mirnaSeqOut)-rightDashCount(readSeqOut))
 			else:
 				iso_3p_status = True
+				iso_3p_pos = '+'+str(rightDashCount(mirnaSeqOut)-rightDashCount(readSeqOut))
 		else:
 			pass
 		if iso_snp_status:
-			variantList.append('iso_snp')
+			variantList.append('iso_snp'+iso_snp_pos)
 		if iso_add_status:
-			variantList.append('iso_add')
+			variantList.append('iso_add'+':'+iso_add_pos)
 		if iso_5p_status:
-			variantList.append('iso_5p')
+			variantList.append('iso_5p'+':'+iso_5p_pos)
 		if iso_3p_status:
-			variantList.append('iso_3p')
+			variantList.append('iso_3p'+':'+iso_3p_pos)
 	variant = ','.join(variantList)
 	if leftDashCount(preMiRSeqOut) > 0:
 		if leftDashCount(readSeqOut) >= leftDashCount(preMiRSeqOut):
@@ -269,6 +286,9 @@ def analyzeAlignment(preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut):
 	readSeqOut_extract = readSeqOut[start2:end2+1]
 	preMiRSeqOut_extract = preMiRSeqOut[start2:end2+1]
 	cigarValue = make_cigar(readSeqOut_extract, preMiRSeqOut_extract)
+	# 1-based location
+	pre_start = pre_start + 1
+	pre_end = pre_end + 1
 	return (type, variant, pre_start, pre_end, cigarValue)
 
 def updateAnnotDic(seqDic, alignmentResult, index):
