@@ -23,6 +23,10 @@ def filter(mirDic, sampleList, logDic, canoRatioTmp):
 					logDic['quantStats'][i]['mirnaReadsFiltered'] = logDic['quantStats'][i]['mirnaReadsFiltered'] + mirDic[mirKey]['quant'][i]
 					logDic['quantStats'][i]['mirnaUniqFiltered'] = logDic['quantStats'][i]['mirnaUniqFiltered'] + 1
 	for i in range(len(sampleList)):
-		if logDic['quantStats'][i]['mirnaReadsFiltered'] == 0:
-			print 'No miRNA reads were found in sample %s. Please check your files and provided arguments.\n'%(sampleFiles[i])
+		try:
+			if logDic['quantStats'][i]['mirnaReadsFiltered'] == 0:
+				print 'No miRNA reads were found in sample %s. Please check your files and provided arguments.\n'%(sampleList[i])
+				sys.exit(1)
+		except KeyError:
+			print 'No miRNA reads were found in sample %s. Please check your files and provided arguments.\n'%(sampleList[i])
 			sys.exit(1)
