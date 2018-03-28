@@ -217,7 +217,7 @@ def analyzeAlignment(preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut):
 				elif i >= 8 and i <= 11:
 					iso_snp_pos = '_central'
 				elif i >=12 and i <= 16:
-					iso_snp_pos = 'central_supp'
+					iso_snp_pos = '_central_supp'
 				else:
 					iso_snp_pos = ''
 				break
