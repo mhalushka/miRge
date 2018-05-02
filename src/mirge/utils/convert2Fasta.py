@@ -1,4 +1,4 @@
-# This version of convert2Fasta.py only extract the seq with the count larg[0]er than 1 and the length between 16 and 25.
+# This version of convert2Fasta.py only extract the seq with the count larger than 1 and the length between 16 and 25.
 # The raw fasta files will be also generated as well.
 # Meanwhile, all the sequences are collapsed.
 # Here, it's better to use the absolute path of the file "mapped.csv" and the outputDir
@@ -10,13 +10,15 @@ def convert2Fasta(infTmp, minLengthTmp, maxLengthTmp, countCutoffTmp, outputDirT
 	# convert2Fasta should have 5 fixed parameters as follows:
 	# mapped.csv(or unmapped.csv) minLength(16) maxLength(25) countCutoff(2) outputDir
 	if spikeIn:
-		startP = 11
+		startP = 12
 	else:
-		startP = 10
+		startP = 11
 	minLength = int(minLengthTmp)
 	maxLength = int(maxLengthTmp)
 	countCutoff = int(countCutoffTmp)
-	abbrName = speciesNameDic[species].lower()
+	# abbrName1 is in the form of miRBase and abbrName2 is in the form of MirGeneDB
+	abbrName1 = speciesNameDic[species].lower()
+	abbrName2 = abbrName1[0].upper()+abbrName1[1:]
 	inf = open(infTmp,"r")
 	outf = open(os.path.join(outputDirTmp, os.path.splitext(infTmp)[0].split('/')[-1]+"_mirna.fa"), "w")
 	outf1 = open(os.path.join(outputDirTmp, os.path.splitext(infTmp)[0].split('/')[-1]+"_mirna_raw.fa"), "w")
@@ -53,7 +55,7 @@ def convert2Fasta(infTmp, minLengthTmp, maxLengthTmp, countCutoffTmp, outputDirT
 			count1 = count1 + int(item.strip())
 		if temp[1].strip() == "1":
 			if count1 >= 1:
-				if abbrName in temp[2] or abbrName in temp[9]:
+				if abbrName1 in temp[2] or abbrName2 in temp[2] or abbrName1 in temp[10] or abbrName2 in temp[10]:
 					name = "mir"+str(j)+"_"+str(count1)
 					outf1.write(">")
 					outf1.write(name)
@@ -67,9 +69,9 @@ def convert2Fasta(infTmp, minLengthTmp, maxLengthTmp, countCutoffTmp, outputDirT
 					contentList1.append(tempList)
 					j = j + 1
 				else:
-					if abbrName not in temp[3]:
+					if abbrName1 not in temp[3] and abbrName2 not in temp[3]:
 						if spikeIn :
-							if temp[10] == '':
+							if temp[startP-1] == '':
 								name = "mir"+str(t)+"_"+str(count1)
 								outf3.write(">")
 								outf3.write(name)
@@ -125,7 +127,7 @@ def convert2Fasta(infTmp, minLengthTmp, maxLengthTmp, countCutoffTmp, outputDirT
 				count = count + int(item.strip())
 			if temp[1].strip() == "1":
 				if count >= countCutoff:
-					if abbrName in temp[2] or abbrName in temp[9]:
+					if abbrName1 in temp[2] or abbrName2 in temp[2] or abbrName1 in temp[10] or abbrName2 in temp[10]:
 						name = "mir"+str(i)+"_"+str(count)
 						outf.write(">")
 						outf.write(name)
@@ -139,9 +141,9 @@ def convert2Fasta(infTmp, minLengthTmp, maxLengthTmp, countCutoffTmp, outputDirT
 						contentList.append(tempList)
 						i = i + 1
 					else:
-						if abbrName not in temp[3]:
+						if abbrName1 not in temp[3] and abbrName2 not in temp[3]:
 							if spikeIn :
-								if temp[10] == '':
+								if temp[startP-1] == '':
 									name = "mir"+str(s)+"_"+str(count)
 									outf2.write(">")
 									outf2.write(name)

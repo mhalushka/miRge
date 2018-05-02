@@ -102,7 +102,7 @@ def generateReport(outputdir, sampleList, readLengthDic, logDic, annotNameList, 
 	filename = os.path.join(outputdir, 'annotationReport.pdf')
 	annotationFile = os.path.join(outputdir, 'annotation.report.csv')
 	outf = open(annotationFile, 'w')
-	outf.write('File name(s),Total Input Reads,Trimmed Reads(all),Trimmed Reads(unique),All miRNA Reads,Filtered miRNA Reads,Unique miRNAs,Hairpin miRNAs,tRNA Reads,snoRNA Reads,rRNA Reads,ncRNA others,mRNA Reads,Remaining Reads\n')
+	outf.write('File name(s),Total Input Reads,Trimmed Reads(all),Trimmed Reads(unique),All miRNA Reads,Filtered miRNA Reads,Unique miRNAs,Hairpin miRNAs,mature tRNA Reads,primary tRNA Reads,snoRNA Reads,rRNA Reads,ncRNA others,mRNA Reads,Remaining Reads\n')
 	styleSheet = getSampleStyleSheet()
 	story = []
 	if spikeIn:
@@ -112,7 +112,8 @@ def generateReport(outputdir, sampleList, readLengthDic, logDic, annotNameList, 
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>All miRNA Reads / Filtered miRNA Reads</font></b></para>",styleSheet["BodyText"]),
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>Unique miRNAs</font></b></para>", styleSheet["BodyText"]),
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>Hairpin miRNAs</font></b></para>", styleSheet["BodyText"]),
-				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>tRNA Reads</font></b></para>", styleSheet["BodyText"]),
+				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>mature tRNA Reads</font></b></para>", styleSheet["BodyText"]),
+				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>primary tRNA Reads</font></b></para>", styleSheet["BodyText"]),
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>snoRNA Reads</font></b></para>", styleSheet["BodyText"]),
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>rRNA Reads</font></b></para>", styleSheet["BodyText"]),
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>ncRNA others Reads</font></b></para>", styleSheet["BodyText"]),
@@ -126,7 +127,8 @@ def generateReport(outputdir, sampleList, readLengthDic, logDic, annotNameList, 
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>All miRNA Reads / Filtered miRNA Reads</font></b></para>",styleSheet["BodyText"]),
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>Unique miRNAs</font></b></para>", styleSheet["BodyText"]),
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>Hairpin miRNAs</font></b></para>", styleSheet["BodyText"]),
-				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>tRNA Reads</font></b></para>", styleSheet["BodyText"]),
+				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>mature tRNA Reads</font></b></para>", styleSheet["BodyText"]),
+				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>primary tRNA Reads</font></b></para>", styleSheet["BodyText"]),
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>snoRNA Reads</font></b></para>", styleSheet["BodyText"]),
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>rRNA Reads</font></b></para>", styleSheet["BodyText"]),
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>ncRNA others Reads</font></b></para>", styleSheet["BodyText"]),
@@ -137,16 +139,17 @@ def generateReport(outputdir, sampleList, readLengthDic, logDic, annotNameList, 
 				Paragraph("<para align=center><b><font color=black size=12.0 face='Helvetica-Bold'>Reads length distrubution</font></b></para>", styleSheet["BodyText"])]]
 	for i in range(len(sampleList)):
 		if spikeIn:
-			xList1 = ['unaligned', 'mRNA', 'ncRNA others', 'rRNA', 'snoRNA', 'tRNA', 'hairpin miRNA', 'miRNA', 'spike-in']
+			xList1 = ['unaligned', 'mRNA', 'ncRNA others', 'rRNA', 'snoRNA', 'mature tRNA', 'primary tRNA', 'hairpin miRNA', 'miRNA', 'spike-in']
 		else:
-			xList1 = ['unaligned', 'mRNA', 'ncRNA others', 'rRNA', 'snoRNA', 'tRNA', 'hairpin miRNA', 'miRNA']
+			xList1 = ['unaligned', 'mRNA', 'ncRNA others', 'rRNA', 'snoRNA', 'mature tRNA', 'primary tRNA', 'hairpin miRNA', 'miRNA']
 		yList1 = [[]]
 		yList1[0].append(float(logDic['quantStats'][i]['remReads'])/logDic['quantStats'][i]['trimmedReads'])
 		yList1[0].append(float(logDic['quantStats'][i]['mrnaReads'])/logDic['quantStats'][i]['trimmedReads'])
 		yList1[0].append(float(logDic['quantStats'][i]['ncrnaOthersReads'])/logDic['quantStats'][i]['trimmedReads'])
 		yList1[0].append(float(logDic['quantStats'][i]['rrnaReads'])/logDic['quantStats'][i]['trimmedReads'])
 		yList1[0].append(float(logDic['quantStats'][i]['snornaReads'])/logDic['quantStats'][i]['trimmedReads'])
-		yList1[0].append(float(logDic['quantStats'][i]['trnaReads'])/logDic['quantStats'][i]['trimmedReads'])
+		yList1[0].append(float(logDic['quantStats'][i]['maturetrnaReads'])/logDic['quantStats'][i]['trimmedReads'])
+		yList1[0].append(float(logDic['quantStats'][i]['pretrnaReads'])/logDic['quantStats'][i]['trimmedReads'])
 		yList1[0].append(float(logDic['quantStats'][i]['hairpinReads'])/logDic['quantStats'][i]['trimmedReads'])
 		yList1[0].append(float(logDic['quantStats'][i]['mirnaReads'])/logDic['quantStats'][i]['trimmedReads'])
 		if spikeIn:
@@ -167,7 +170,8 @@ def generateReport(outputdir, sampleList, readLengthDic, logDic, annotNameList, 
 		dataTmp1_1.append(str(logDic['quantStats'][i]['mirnaReads'])+' / '+str(logDic['quantStats'][i]['mirnaReadsFiltered']))
 		dataTmp1_1.append(str(logDic['quantStats'][i]['mirnaUniqFiltered']))
 		dataTmp1_1.append(str(logDic['quantStats'][i]['hairpinReads']))
-		dataTmp1_1.append(str(logDic['quantStats'][i]['trnaReads']))
+		dataTmp1_1.append(str(logDic['quantStats'][i]['maturetrnaReads']))
+		dataTmp1_1.append(str(logDic['quantStats'][i]['pretrnaReads']))
 		dataTmp1_1.append(str(logDic['quantStats'][i]['snornaReads']))
 		dataTmp1_1.append(str(logDic['quantStats'][i]['rrnaReads']))
 		dataTmp1_1.append(str(logDic['quantStats'][i]['ncrnaOthersReads']))
@@ -184,20 +188,20 @@ def generateReport(outputdir, sampleList, readLengthDic, logDic, annotNameList, 
 		outf.write(sampleList[i]+',')
 		if spikeIn:
 			outf.write(','.join([str(logDic['quantStats'][i]['totalReads']), str(logDic['quantStats'][i]['trimmedReads']), str(logDic['quantStats'][i]['trimmedUniq']), str(logDic['quantStats'][i]['mirnaReads']),
-					str(logDic['quantStats'][i]['mirnaReadsFiltered']), str(logDic['quantStats'][i]['mirnaUniqFiltered']), str(logDic['quantStats'][i]['hairpinReads']), str(logDic['quantStats'][i]['trnaReads']),
-					str(logDic['quantStats'][i]['snornaReads']), str(logDic['quantStats'][i]['rrnaReads']), str(logDic['quantStats'][i]['ncrnaOthersReads']), str(logDic['quantStats'][i]['mrnaReads']),  str(logDic['quantStats'][i]['spikeInReads']), str(logDic['quantStats'][i]['remReads'])]))
+					str(logDic['quantStats'][i]['mirnaReadsFiltered']), str(logDic['quantStats'][i]['mirnaUniqFiltered']), str(logDic['quantStats'][i]['hairpinReads']), str(logDic['quantStats'][i]['maturetrnaReads']),
+					str(logDic['quantStats'][i]['pretrnaReads']), str(logDic['quantStats'][i]['snornaReads']), str(logDic['quantStats'][i]['rrnaReads']), str(logDic['quantStats'][i]['ncrnaOthersReads']), str(logDic['quantStats'][i]['mrnaReads']),  str(logDic['quantStats'][i]['spikeInReads']), str(logDic['quantStats'][i]['remReads'])]))
 		else:
 			outf.write(','.join([str(logDic['quantStats'][i]['totalReads']), str(logDic['quantStats'][i]['trimmedReads']), str(logDic['quantStats'][i]['trimmedUniq']), str(logDic['quantStats'][i]['mirnaReads']),
-					str(logDic['quantStats'][i]['mirnaReadsFiltered']), str(logDic['quantStats'][i]['mirnaUniqFiltered']), str(logDic['quantStats'][i]['hairpinReads']), str(logDic['quantStats'][i]['trnaReads']),
-					str(logDic['quantStats'][i]['snornaReads']), str(logDic['quantStats'][i]['rrnaReads']), str(logDic['quantStats'][i]['ncrnaOthersReads']), str(logDic['quantStats'][i]['mrnaReads']), str(logDic['quantStats'][i]['remReads'])]))
+					str(logDic['quantStats'][i]['mirnaReadsFiltered']), str(logDic['quantStats'][i]['mirnaUniqFiltered']), str(logDic['quantStats'][i]['hairpinReads']), str(logDic['quantStats'][i]['maturetrnaReads']),
+					str(logDic['quantStats'][i]['pretrnaReads']), str(logDic['quantStats'][i]['snornaReads']), str(logDic['quantStats'][i]['rrnaReads']), str(logDic['quantStats'][i]['ncrnaOthersReads']), str(logDic['quantStats'][i]['mrnaReads']), str(logDic['quantStats'][i]['remReads'])]))
 		outf.write('\n')
 	outf.close()
 	if spikeIn:
+		colCount1_1 = 15-2
+		colWidthsArgu = (1.367*inch, None, None, None, None, None, None, None, None, None, None, None, None, None)
+	else:
 		colCount1_1 = 14-2
 		colWidthsArgu = (1.367*inch, None, None, None, None, None, None, None, None, None, None, None, None)
-	else:
-		colCount1_1 = 13-2
-		colWidthsArgu = (1.367*inch, None, None, None, None, None, None, None, None, None, None, None)
 	t1=Table(data1_1, colWidths=colWidthsArgu,
 		style=[
 		('FONTSIZE', (0, 0), (-1, -1), 9),

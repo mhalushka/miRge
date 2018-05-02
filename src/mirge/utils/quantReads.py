@@ -10,9 +10,9 @@ def quantReads(inputfile, seqDic, readLengthDic, sampleCount, sampleIndex, sampl
 				seqDic[seq]['quant'][sampleIndex] = seqDic[seq]['quant'][sampleIndex] + 1
 			except KeyError:
 				if spikeIn:
-					seqDic.update({seq:{'quant':[0]*sampleCount, 'annot':[0,'','','','','','','','',''], 'length':len(seq)}})
+					seqDic.update({seq:{'quant':[0]*sampleCount, 'annot':[0,'','','','','','','','','',''], 'length':len(seq)}})
 				else:
-					seqDic.update({seq:{'quant':[0]*sampleCount, 'annot':[0,'','','','','','','',''], 'length':len(seq)}})
+					seqDic.update({seq:{'quant':[0]*sampleCount, 'annot':[0,'','','','','','','','',''], 'length':len(seq)}})
 				seqDic[seq]['quant'][sampleIndex] = 1
 			try:
 				readLengthDic[len(seq)][sampleIndex] = readLengthDic[len(seq)][sampleIndex] + 1

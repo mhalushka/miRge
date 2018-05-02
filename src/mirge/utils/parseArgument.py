@@ -11,7 +11,7 @@ def parseArgument():
 ##                                                                              ##\n\
 ##      miRge2.0 (Comprehensive analysis of miRNA sequencing Data)              ##\n\
 ##                                                                              ##\n\
-##      last change: 12/21/2017                                                 ##\n\
+##      last change: 05/02/2017                                                 ##\n\
 ##                                                                              ##\n\
 ##                                                                              ##\n\
 ##################################################################################\n\
@@ -26,7 +26,7 @@ The two functions of miRge2.0 are:\n\
 	parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter, description=usage, usage=argparse.SUPPRESS)
 	subparsers = parser.add_subparsers(help='sub-command help')
 	#create the parser for the 'annotate' command
-	usage1 = usageTmp+'Usage: miRge2.0 annotate [-h] [<args>]\n\nExample:\nmiRge2.0 annotate -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -sp human -ad illumina -ai -gff -cpu 4\n'
+	usage1 = usageTmp+'Usage: miRge2.0.py annotate [-h] [<args>]\n\nExample:\nmiRge2.0 annotate -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -sp human -ad illumina -ai -gff -cpu 4\n'
 	#print usage1
 	parser_1 = subparsers.add_parser('annotate', usage = usage1)
 	parser_1.add_argument('-s', nargs='*', required=True, dest='sampleList', metavar='sample <required>', help='two options: 1. A file where each row represents one sample name;  2. *.fastq *.fastq ...')
@@ -39,7 +39,7 @@ The two functions of miRge2.0 are:\n\
 	#parser_1.add_argument('-mf', required=True, dest='mergeLibFile', metavar='<file required>', help='The file that contains the merged miRNAs for a specific sepeices')
 	#parser_1.add_argument('-mif', required=True, dest='miRNA_fa', metavar='<file required>', help='the fasta file of miRNA including miRNA SNPs')
 	#parser_1.add_argument('-sp', required=True, dest='species', metavar='<string required>', help="The species where the sequencing data are from. (novel miRNA detection is confined in human)")
-	parser_1.add_argument('-ex', default='0.1', dest ='canoRatio', metavar='<float>', help='the threshold of the proportion of canonical reads for the miRNAs to determine whether keeping them or not when counting. Users can set it between 0.02 and 0.5 (default: 0.1)')
+	parser_1.add_argument('-ex', default='0.1', dest ='canoRatio', metavar='<float>', help='the threshold of the proportion of canonical reads for the miRNAs to determine whether keeping them or not when counting. Users can set it between 0.02 and 0.5. (default: 0.1)')
 	parser_1.add_argument('-ad', default='none', dest='adapter', metavar='<string>', help='the adapter need to be removed which could be illumina, ion or a defined sequence (default: none)')
 	parser_1.add_argument('-phred64', action = 'store_true', help='phred64 format (default: 64)')
 	parser_1.add_argument('-spikeIn', dest='spikeIn', action = 'store_true', help="switch to annotate spike-ins if the bowtie index files are loacted at the path of bowtie's index files (default: off)")
@@ -51,7 +51,7 @@ The two functions of miRge2.0 are:\n\
 	parser_1.add_argument('-gff', dest='gff_output', action = 'store_true', help='switch to output results in gff format (default: off)')
 	parser_1.add_argument('--version', action='version', version='%s'%(version))
 	#create the parser for the 'predict' command
-	usage2 = usageTmp+'Usage: miRge2.0 predict [-h] [<args>]\n\nExample:\nmiRge2.0 predict -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -ps /usr/local/bin -pr /usr/local/bin -sp human -ad illumina -ai -gff -cpu 4\n'
+	usage2 = usageTmp+'Usage: miRge2.0.py predict [-h] [<args>]\n\nExample:\nmiRge2.0 predict -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -ps /usr/local/bin -pr /usr/local/bin -sp human -ad illumina -ai -gff -cpu 4\n'
 	parser_2 = subparsers.add_parser('predict', usage =usage2)
 	parser_2.add_argument('-s', nargs='*', required=True, dest='sampleList', metavar='sample <required>', help='two options: 1. A file where each row represents one sample name;  2. *.fastq *.fastq ...')
 	parser_2.add_argument('-o', default=dir_tmp, dest='output_dir', metavar='<dir>', help='the directory of the outputs (default: current directory)')
@@ -70,7 +70,7 @@ The two functions of miRge2.0 are:\n\
 	#parser_2.add_argument('-abbr', required=True, dest='abbrName', metavar='<string required>', help="The abbreviation name of species in miRBase")
 	parser_2.add_argument('-ps', required=True, dest='samtoolsBinary', metavar='<dir required>', help="the path to the system's samtools binary")
 	parser_2.add_argument('-pr', required=True, dest='rnafoldBinary', metavar='<dir required>', help="the path to the system's rnafold binary")
-	parser_2.add_argument('-ex', default='0.1', dest ='canoRatio', metavar='<float>', help='the threshold of the proportion of canonical reads for the miRNAs to determine whether keeping them or not when counting. Users can set it between 0.02 and 0.5 (default: 0.1)')
+	parser_2.add_argument('-ex', default='0.1', dest ='canoRatio', metavar='<float>', help='the threshold of the proportion of canonical reads for the miRNAs to determine whether keeping them or not when counting. Users can set it between 0.02 and 0.5. (default: 0.1)')
 	parser_2.add_argument('-ad', default='none', dest='adapter', metavar='<string>', help='the adapter need to be removed which could be illumina, ion or a defined sequence (default: none)')
 	parser_2.add_argument('-phred64', action = 'store_true', help='phred64 format(default: 64)')
 	parser_2.add_argument('-spikeIn', dest='spikeIn', action = 'store_true', help="switch to annotate spike-ins if the bowtie index files are loacted at the path of bowtie's index files (default: off)")

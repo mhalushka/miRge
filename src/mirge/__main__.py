@@ -75,7 +75,7 @@ def main():
 		if args.miRNA_database.lower() == 'mirbase':
 			miRNA_database = 'miRBase'
 		else:
-			miRNA_database = 'miRGeneDB'
+			miRNA_database = 'MirGeneDB'
 	else:
 		print >> sys.stderr, "The value of parameter '-d' is invalid. Please check it"
 		sys.exit(1)
@@ -98,7 +98,7 @@ def main():
 			if not executable3:
 				print >> sys.stderr, "RNAfold can't be found in %s. Please check it."%(rnafoldBinaryTmp)
 			sys.exit(1)
-	
+
 	libraryPath = args.libraryPath
 	species = args.species
 	indexPath = os.path.join(libraryPath, species, 'index.Libs')
@@ -141,9 +141,9 @@ def main():
 			#sys.exit(1)
 
 	gff_output = args.gff_output
-	miRNA_coordinate = os.path.join(libraryPath, species, 'annotation.Libs', species+'_miRNA.gff3')
+	miRNA_coordinate = os.path.join(libraryPath, species, 'annotation.Libs', species+'_'+miRNA_database+'.gff3')
 	if gff_output:
-		miRNamePreNameDic = extractPreMiRName(miRNA_coordinate)
+		miRNamePreNameDic = extractPreMiRName(miRNA_coordinate, miRNA_database)
 		isomiRContentDic = {}
 		# the keys of isomiRContentDic are miRNA and isomiR sequences. The value is a dictionary and the keys of the dictionary are 'miRName', 'preMiRName', 'type', 'pre_start',
 		# 'pre_end', 'strand', 'variant', 'cigar', 'expression'
@@ -152,7 +152,7 @@ def main():
 		isomiRContentDic = None
 
 	# Check index files 
-	for type in ['mirna_'+miRNA_database, 'hairpin_'+miRNA_database, 'mrna', 'trna', 'snorna', 'rrna', 'ncrna_others']:
+	for type in ['mirna_'+miRNA_database, 'hairpin_'+miRNA_database, 'mrna', 'mature_trna', 'pre_trna', 'snorna', 'rrna', 'ncrna_others']:
 		if os.path.isfile(os.path.join(indexPath, species+'_'+type+'.1.ebwt')):
 			pass
 		else:
@@ -162,7 +162,8 @@ def main():
 	mirna_index = os.path.join(indexPath, species+'_mirna_'+miRNA_database)
 	hairpin_index = os.path.join(indexPath, species+'_hairpin_'+miRNA_database)
 	mrna_index = os.path.join(indexPath, species+'_mrna')
-	tRNA_index = os.path.join(indexPath, species+'_trna')
+	mature_tRNA_index = os.path.join(indexPath, species+'_mature_trna')
+	pre_tRNA_index = os.path.join(indexPath, species+'_pre_trna')
 	snoRNA_index = os.path.join(indexPath, species+'_snorna')
 	rRNA_index = os.path.join(indexPath, species+'_rrna')
 	ncrna_others_index = os.path.join(indexPath, species+'_ncrna_others')
@@ -223,9 +224,9 @@ def main():
 	logDic.update({'annotStats':[]})
 	# two primary keys 'quantStats' and 'annotStats'
 	if spikeIn:
-		annotNameList = ['exact miRNA', 'hairpin miRNA', 'tRNA', 'snoRNA', 'rRNA', 'ncrna others', 'mRNA', 'isomiR miRNA', 'spike-in']
+		annotNameList = ['exact miRNA', 'hairpin miRNA', 'mature tRNA', 'primary tRNA', 'snoRNA', 'rRNA', 'ncrna others', 'mRNA', 'isomiR miRNA', 'spike-in']
 	else:
-		annotNameList = ['exact miRNA', 'hairpin miRNA', 'tRNA', 'snoRNA', 'rRNA', 'ncrna others', 'mRNA', 'isomiR miRNA']
+		annotNameList = ['exact miRNA', 'hairpin miRNA', 'mature tRNA', 'primary tRNA', 'snoRNA', 'rRNA', 'ncrna others', 'mRNA', 'isomiR miRNA']
 	
 	# perform quantitation analysis.
 	time_0 = time.time()
@@ -257,11 +258,11 @@ def main():
 	print '\nPerforming annotation for all of the collasped sequences...'
 	time_4 = time.time()
 	#numCPU_new = '1'
-	runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, outputdir, logDic, mirna_index, hairpin_index, tRNA_index, snoRNA_index, rRNA_index, ncrna_others_index, mrna_index, spikeIn, spikeIn_index, gff_output, miRNamePreNameDic, isomiRContentDic)
+	runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, outputdir, logDic, mirna_index, hairpin_index, mature_tRNA_index, pre_tRNA_index, snoRNA_index, rRNA_index, ncrna_others_index, mrna_index, spikeIn, spikeIn_index, gff_output, miRNamePreNameDic, isomiRContentDic, miRNA_database)
 	time_5 = time.time()
 	print 'All annotation cycles completed (%.2f sec).\n'%(time_5-time_4)
 
-	# Summerize and tabulate the results
+	# Summarize and tabulate the results
 	print "Summarizing and tabulating results..."
 	summarize(seqDic, sampleList, logDic, mirDic, mirna_index, outputdir, spikeIn, bowtieBinary)
 
@@ -271,7 +272,7 @@ def main():
 
 	generateReport(outputdir, sampleList, readLengthDic, logDic, annotNameList, seqDic, spikeIn)
 	
-	writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, logDic, seqDic, mirDic, mirNameSeqDic, mirMergedNameDic, bowtieBinary, genome_index, numCPU, phred64, removedMiRNA_ai_List, spikeIn, gff_output, isomiRContentDic, miRNA_database, os.path.dirname(os.path.realpath(__file__)))
+	writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, logDic, seqDic, mirDic, mirNameSeqDic, mirMergedNameDic, bowtieBinary, genome_index, numCPU, phred64, removedMiRNA_ai_List, spikeIn, gff_output, isomiRContentDic, miRNA_database)
 	time_6 = time.time()
 	print 'Summary Complete (%.2f sec)'%(time_6-time_5)
 	print 'Annotation of miRge2.0 Completed (%.2f sec)'%(time_6-time_0)
@@ -315,8 +316,11 @@ def main():
 				print '%s is not a file, please check it.'%(wideSampleListFile)
 				sys.exit(1)
 		#Load the coordinate file of repeat region in Genome which is GRCH38_genome_repeats_sorted.pckl'
-		with open(genome_repeats, 'rb') as f:
-			repEleChrCoordinateDic = cPickle.load(f)
+		try:
+			with open(genome_repeats, 'rb') as f:
+				repEleChrCoordinateDic = cPickle.load(f)
+		except IOError:
+			repEleChrCoordinateDic = {}
 		#Load the genome fasta file: human_genome.pckl
 		with open(genome_fa, 'r') as f:
 			chrSeqDic = cPickle.load(f)
@@ -335,7 +339,10 @@ def main():
 					content = line1.strip().split("\t")
 					if content[2] == "miRNA":
 						chr = content[0]
-						miRNAName = content[-1].split(";")[2].split("=")[-1]
+						if miRNA_database == 'miRBase':
+							miRNAName = content[-1].split(";")[2].split("=")[-1]
+						else:
+							miRNAName = content[-1].split(";")[0].split("=")[-1]
 						startPos = int(content[3])
 						endPos = int(content[4])
 						strandLabel = content[6]
@@ -508,10 +515,9 @@ def main():
 						# Invoke the predictive model to predict
 						
 						if fileType == 'unmapped.csv':
-							#PopenTmp = subprocess.Popen(['which', 'miRge2.0.py'], stdout=subprocess.PIPE)
+							#PopenTmp = subprocess.Popen(['which', sys.argv[0]], stdout=subprocess.PIPE)
 							#result = PopenTmp.communicate()[0]
 							#print result
-							#if result.strip() != '':
 							modelDir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'models')
 							fileToPredict = outfile4+'_modified_selected_sorted_features_updated_stableClusterSeq_15.tsv'
 							sampleNameTmp = '_'.join(os.path.basename(fileToPredict).split('_')[2:-10])
@@ -531,8 +537,9 @@ def main():
 								time_8 = time.time()
 								print 'Prediction of novel miRNAs Completed (%.2f sec)'%(time_8-time_7)
 							else:
-								print "model file and feature namelist files don't exsit at: %s and %s\nPlease check them."%(os.path.join(modelDir, 'svc_model.pkl'), os.path.join(modelDir, 'total_features_namelist.txt'))
-			os.system('rm -r %s'%(outputdir2))
+								print "The model file located at %s and the feature namelist files located at %s don't exsit.\nPlease check them."%(os.path.join(modelDir, species+'svc_model.pkl'), os.path.join(modelDir, 'total_features_namelist.txt'))
+			if fileType == 'unmapped.csv':
+				os.system('rm -r %s'%(outputdir2))
 
 if __name__ == '__main__':
 	main()

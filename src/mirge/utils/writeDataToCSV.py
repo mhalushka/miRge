@@ -335,7 +335,7 @@ def calcEntropy(inputList):
 			entropy = entropy + -1*freq*math.log(freq, 2)
 	return entropy
 
-def writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, logDic, seqDic, mirDic, mirNameSeqDic, mirMergedNameDic, bowtieBinary, genome_index, numCPU, phred64, removedMiRNAList, spikeIn, gff_output, isomiRContentDic, miRNA_database, paraent_dir):
+def writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, logDic, seqDic, mirDic, mirNameSeqDic, mirMergedNameDic, bowtieBinary, genome_index, numCPU, phred64, removedMiRNAList, spikeIn, gff_output, isomiRContentDic, miRNA_database):
 	a2IPercentageCutoff = 2.0
 	mappedFile = os.path.join(outputdir, 'mapped.csv')
 	isomirFile = os.path.join(outputdir, 'isomirs.csv')
@@ -343,7 +343,6 @@ def writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, log
 	unmappedFile = os.path.join(outputdir, 'unmapped.csv')
 	mirRPMFile = os.path.join(outputdir, 'miR.RPM.csv')
 	mirCountsFile = os.path.join(outputdir, 'miR.Counts.csv')
-	mirFile = os.path.join(outputdir, 'miR.Counts.csv')
 	a2IEditingFileTmp1 = os.path.join(outputdir, 'a2IEditing.report.tmp1.csv')
 	a2IEditingFileTmp2 = os.path.join(outputdir, 'a2IEditing.report.tmp2.csv')
 	a2IEditingFileTmp3 = os.path.join(outputdir, 'a2IEditing.report.tmp3.csv')
@@ -359,7 +358,7 @@ def writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, log
 			entry = [seqKey]
 			isomirVals = [seqKey]
 			if seqDic[seqKey]['annot'][0] >0:
-				isomir = seqDic[seqKey]['annot'][8]
+				isomir = seqDic[seqKey]['annot'][9]
 				mirna = seqDic[seqKey]['annot'][1]
 				if isomir != '' or mirna != '':
 					if isomir != '':
@@ -379,10 +378,10 @@ def writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, log
 					for i in range(len(sampleList)):
 						isomirDic[key][key2][seqKey].append(seqDic[seqKey]['quant'][i])
 				if spikeIn:
-					for i in range(10):
+					for i in range(11):
 						entry.append(seqDic[seqKey]['annot'][i])
 				else:
-					for i in range(9):
+					for i in range(10):
 						entry.append(seqDic[seqKey]['annot'][i])
 				for i in range(len(sampleList)):
 					readCount = seqDic[seqKey]['quant'][i]
@@ -400,11 +399,11 @@ def writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, log
 			with open(gffFileTmp, 'w') as outf:
 				outf.write('# GFF3 adapted for miRNA sequencing data\n## VERSION 0.0.1\n## source-ontology: ')
 				if miRNA_database == 'miRBase':
-					source = 'miRBase21'
-					outf.write('miRBase21\n')
+					source = 'miRBase22'
+					outf.write('miRBase22\n')
 				else:
-					source = miRNA_database
-					outf.write('%s\n'%(miRNA_database))
+					source = miRNA_database+'2.0'
+					outf.write('%s\n'%(source))
 				outf.write('## COLDATA: %s\n'%(sampleName))
 				for seqKey in isomiRContentDic.keys():
 					#RPM = 1000000.0*seqDic[seqKey]['quant'][i]/logDic['quantStats'][i]['mirnaReadsFiltered']
@@ -508,10 +507,10 @@ def writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, log
 			if seqDic[seqKey]['annot'][0] == 0:
 				outf.write(seqKey)
 				if spikeIn:
-					for i in range(10):
+					for i in range(11):
 						outf.write(','+str(seqDic[seqKey]['annot'][i]))
 				else:
-					for i in range(9):
+					for i in range(10):
 						outf.write(','+str(seqDic[seqKey]['annot'][i]))
 				for i in range(len(sampleList)):
 					outf.write(','+str(seqDic[seqKey]['quant'][i]))
@@ -553,8 +552,8 @@ def writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, log
 		endBase = 'G'
 		mirNameSeqDicTmp = {}
 		for seqKey in seqDic.keys():
-			if seqDic[seqKey]['annot'][1] != '' or seqDic[seqKey]['annot'][8] != '':
-				for item in [seqDic[seqKey]['annot'][1], seqDic[seqKey]['annot'][8]]:
+			if seqDic[seqKey]['annot'][1] != '' or seqDic[seqKey]['annot'][9] != '':
+				for item in [seqDic[seqKey]['annot'][1], seqDic[seqKey]['annot'][9]]:
 					if item != '':
 						miRNameTmp = item
 						break
@@ -937,8 +936,8 @@ def writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, log
 		if len(miRNAList2) <= 5:
 			print 'The number of A-to-I editing sites for is less than 10 so that no heatmap is drawn.'
 		else:
-			#PopenTmp2 = subprocess.Popen(['which', 'miRge2.0.py'], stdout=subprocess.PIPE)
-			#result2 = PopenTmp2.communicate()[0]
-			RscriptDir = os.path.join(paraent_dir, 'rSciprts', 'A-to-I_plot.R')
+			PopenTmp2 = subprocess.Popen(['which', 'miRge2.0.py'], stdout=subprocess.PIPE)
+			result2 = PopenTmp2.communicate()[0]
+			RscriptDir = os.path.join(os.path.dirname(result2.strip()), 'rScripts', 'A-to-I_plot.R')
 			outA2Ipdf = os.path.join(outputdir, 'a-to-I.heatmap.pdf')
 			os.system('Rscript %s %s %s'%(RscriptDir, a2IEditingFileTrans, outA2Ipdf))

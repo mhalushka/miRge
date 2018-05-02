@@ -1,4 +1,4 @@
-import forgi.graph.bulge_graph as fgb
+import mirge.forgi.graph.bulge_graph as fgb
 import os
 import re
 
