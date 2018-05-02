@@ -162,7 +162,7 @@ miRge2.0 has two module: annotate and predict.
 Changelog
 ---------
 
-**02-22-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add a `-ex` option. The threshold of the proportion of canonical reads to total reads (canonical + isomiRs) for a given miRNA to trigger the miRNA to be null (0) on the miR.Counts.csv and miR.RPM.csv files. The user can set the value between 0.02 and 0.5. The default is 0.1 (10%).  All reads are still reported on mapped.csv.
+**02-22-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add a `-ex` option. If the canonical reads count is less than 2 or the proportion of canonical reads is less that the set threshold, the miRNA will not be counted in the ouput files: miR.Counts.csv and miR.RPM.csv.
 
 
 Citation
