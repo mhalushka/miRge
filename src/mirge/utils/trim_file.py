@@ -1,7 +1,7 @@
 import sys
 from multiprocessing import Process, Queue
-from cutadapt.scripts.cutadapt import AdapterCutter
-from cutadapt.modifiers import QualityTrimmer, UnconditionalCutter
+#from cutadapt.modifiers import AdapterCutter
+from cutadapt.modifiers import AdapterCutter, QualityTrimmer, UnconditionalCutter
 from cutadapt.seqio import FastqReader
 import cutadapt
 from distutils.version import StrictVersion
