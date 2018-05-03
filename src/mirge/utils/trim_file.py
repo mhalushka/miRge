@@ -1,24 +1,23 @@
 import sys
 from multiprocessing import Process, Queue
-from mirge.cutadapt.scripts.cutadapt import AdapterCutter
-from mirge.cutadapt.modifiers import QualityTrimmer, UnconditionalCutter
-from mirge.cutadapt.seqio import FastqReader
-import mirge.cutadapt
+from cutadapt.scripts.cutadapt import AdapterCutter
+from cutadapt.modifiers import QualityTrimmer, UnconditionalCutter
+from cutadapt.seqio import FastqReader
+import cutadapt
 from distutils.version import StrictVersion
 
-cutadapt_version = StrictVersion('1.11')
-
+cutadapt_version = StrictVersion(cutadapt.__version__)
 if cutadapt_version < StrictVersion('1.8.1'):
 	raise ImportError('miRge requires cutadapt >= version 1.8.1 to operate.')
 elif cutadapt_version < StrictVersion('1.10.0'):
-	from mirge.cutadapt.adapters import Adapter, gather_adapters
+	from cutadapt.adapters import Adapter, gather_adapters
 	def parse_adapters(adapter, error_rate=None):
 		adapters = []
 		for name,seq,where in gather_adapters(adapter.split(','), [], []):
 			adapters.append(Adapter(seq, where, error_rate, name=name))
 		return adapters
 else:
-	from mirge.cutadapt.adapters import AdapterParser
+	from cutadapt.adapters import AdapterParser
 	def parse_adapters(adapter, error_rate=None):
 		return AdapterParser(max_error_rate=error_rate).parse_multi(adapter.split(','), [], [])
 
