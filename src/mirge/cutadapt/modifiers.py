@@ -7,8 +7,8 @@ need to be stored, and as a class with a __call__ method if there are parameters
 """
 from __future__ import print_function, division, absolute_import
 import re
-from cutadapt.qualtrim import quality_trim_index, nextseq_trim_index
-from cutadapt.compat import maketrans
+from mirge.cutadapt.qualtrim import quality_trim_index, nextseq_trim_index
+from mirge.cutadapt.compat import maketrans
 
 
 class AdapterCutter(object):
