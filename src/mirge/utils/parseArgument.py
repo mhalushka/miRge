@@ -26,7 +26,7 @@ The two functions of miRge2.0 are:\n\
 	parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter, description=usage, usage=argparse.SUPPRESS)
 	subparsers = parser.add_subparsers(help='sub-command help')
 	#create the parser for the 'annotate' command
-	usage1 = usageTmp+'Usage: miRge2.0.py annotate [-h] [<args>]\n\nExample:\nmiRge2.0 annotate -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -sp human -ad illumina -ai -gff -cpu 4\n'
+	usage1 = usageTmp+'Usage: miRge2.0 annotate [-h] [<args>]\n\nExample:\nmiRge2.0 annotate -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -sp human -ad illumina -ai -gff -cpu 4\n'
 	#print usage1
 	parser_1 = subparsers.add_parser('annotate', usage = usage1)
 	parser_1.add_argument('-s', nargs='*', required=True, dest='sampleList', metavar='sample <required>', help='two options: 1. A file where each row represents one sample name;  2. *.fastq *.fastq ...')
@@ -51,7 +51,7 @@ The two functions of miRge2.0 are:\n\
 	parser_1.add_argument('-gff', dest='gff_output', action = 'store_true', help='switch to output results in gff format (default: off)')
 	parser_1.add_argument('--version', action='version', version='%s'%(version))
 	#create the parser for the 'predict' command
-	usage2 = usageTmp+'Usage: miRge2.0.py predict [-h] [<args>]\n\nExample:\nmiRge2.0 predict -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -ps /usr/local/bin -pr /usr/local/bin -sp human -ad illumina -ai -gff -cpu 4\n'
+	usage2 = usageTmp+'Usage: miRge2.0 predict [-h] [<args>]\n\nExample:\nmiRge2.0 predict -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -ps /usr/local/bin -pr /usr/local/bin -sp human -ad illumina -ai -gff -cpu 4\n'
 	parser_2 = subparsers.add_parser('predict', usage =usage2)
 	parser_2.add_argument('-s', nargs='*', required=True, dest='sampleList', metavar='sample <required>', help='two options: 1. A file where each row represents one sample name;  2. *.fastq *.fastq ...')
 	parser_2.add_argument('-o', default=dir_tmp, dest='output_dir', metavar='<dir>', help='the directory of the outputs (default: current directory)')
