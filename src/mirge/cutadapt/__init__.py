@@ -8,7 +8,7 @@ del get_versions
 
 def check_importability():  # pragma: no cover
 	try:
-		import cutadapt._align
+		import mirge.cutadapt._align
 	except ImportError as e:
 		if 'undefined symbol' in str(e):
 			print("""
