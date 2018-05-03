@@ -58,7 +58,7 @@ See http://cutadapt.readthedocs.org/ for full documentation.
 from __future__ import print_function, division, absolute_import
 
 # Print a helpful error message if the extension modules cannot be imported.
-from cutadapt import check_importability
+from mirge.cutadapt import check_importability
 check_importability()
 
 import sys
@@ -70,17 +70,17 @@ import logging
 import platform
 import textwrap
 
-from cutadapt import seqio, __version__
-from cutadapt.xopen import xopen
-from cutadapt.adapters import AdapterParser
-from cutadapt.modifiers import (LengthTagModifier, SuffixRemover, PrefixSuffixAdder,
+from mirge.cutadapt import seqio, __version__
+from mirge.cutadapt.xopen import xopen
+from mirge.cutadapt.adapters import AdapterParser
+from mirge.cutadapt.modifiers import (LengthTagModifier, SuffixRemover, PrefixSuffixAdder,
 	DoubleEncoder, ZeroCapper, PrimerTrimmer, QualityTrimmer, UnconditionalCutter,
 	NEndTrimmer, AdapterCutter, NextseqQualityTrimmer)
-from cutadapt.filters import (NoFilter, PairedNoFilter, Redirector, PairedRedirector,
+from mirge.cutadapt.filters import (NoFilter, PairedNoFilter, Redirector, PairedRedirector,
 	LegacyPairedRedirector, TooShortReadFilter, TooLongReadFilter,
 	Demultiplexer, NContentFilter, DiscardUntrimmedFilter, DiscardTrimmedFilter)
-from cutadapt.report import Statistics, print_report, redirect_standard_output
-from cutadapt.compat import next
+from mirge.cutadapt.report import Statistics, print_report, redirect_standard_output
+from mirge.cutadapt.compat import next
 
 logger = logging.getLogger()
 
