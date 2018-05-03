@@ -23,8 +23,8 @@ Installation
 ### Download libraries
 
 miRge2.0 relies on a huge number of libraries like: <br />
-1) Bowtie indexes of genome, hairping, mature miRNAs in miRBase, mature miRNAs in miRGeneDB, mRNA, rRNA, snoRNA, tRNA, other ncRNA and spike-in sequeces (optional) <br />
-2) Sequeces of genome, mature miRNAs (including SNP information) in miRBase and miRGeneDB <br />
+1) Bowtie indexes of genome, hairping, mature miRNAs in miRBase, mature miRNAs in miRGeneDB, mRNA, rRNA, snoRNA, tRNA, other ncRNA and spike-in sequences (optional) <br />
+2) Sequences of genome, mature miRNAs (including SNP information) in miRBase and miRGeneDB <br />
 3) Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase and miRGeneDB <br />
 
 Libraries of six species including ___human___, ___mouse___, ___rat___, ___zebrafish___, ___nematode___ and ___fruitfly___ can be downloaded separately by wget. `wget -O human.tar.gz https://jh.box.com/shared/static/rj7ufy5v15uw7ytsyyrsryw99u7ml82j.gz`; <br />`wget -O mouse.tar.gz https://jh.box.com/shared/static/z2bcey8j9e9nxnvpmb4fm88zzq3da4m1.gz`; <br />`wget -O rat.tar.gz https://jh.box.com/shared/static/mmztv42j8h7snk0eo80o7a7t30it4q9f.gz`; <br />`wget -O zebrafish.tar.gz https://jh.box.com/shared/static/nwn7jzn5ekgm51k7jlk43a6h75aasgr1.gz`; <br />`wget -O nematode.tar.gz https://jh.box.com/shared/static/boubl0g28b0xj952e8bhfmbds056gdvi.gz`; <br />`wget -O fruitfly.tar.gz https://jh.box.com/shared/static/ilrnq62cp06pviir5t0mh85aqet0fmjq.gz`.
