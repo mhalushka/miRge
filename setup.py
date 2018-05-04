@@ -33,7 +33,7 @@ setup(
 	'scipy>=0.17.0', 'matplotlib>=2.1.1', 'pandas>=0.21.1','scikit-learn>=0.18.1',
 	'reportlab>=3.3.0', 
 	],
-	# 'forgi==0.2' need to be installed by pip
+	# 'forgi==0.20' need to be installed by pip
 	entry_points={'console_scripts': ['miRge2.0 = mirge.__main__:main']},
 	classifiers=[
 		"Development Status :: 1 - Alpha",
