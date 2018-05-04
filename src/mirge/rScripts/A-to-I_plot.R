@@ -25,7 +25,7 @@ theme(panel.grid.major = element_blank(),
       legend.box='horizontal',
       legend.box.just='bottom',
       axis.text.x=element_text(angle=45, hjust=1))
-dev.off()
+garbage <- dev.off()
 
 
 
