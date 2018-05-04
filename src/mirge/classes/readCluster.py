@@ -3,7 +3,7 @@ from Bio import SeqIO
 from Bio import pairwise2
 from Bio.Alphabet import IUPAC, Gapped
 from Bio.Alphabet import generic_dna
-from Bio.Align.Generic import Alignment
+#from Bio.Align.Generic import Alignment
 import sys
 
 def calculate_identity(sequenceA, sequenceB):
@@ -42,7 +42,7 @@ class ReadCluster(object):
 		return len(self.readSeqList)
 
 	def align2Standard(self):
-		align = Alignment(Gapped(IUPAC.unambiguous_dna, "-"))
+		#align = Alignment(Gapped(IUPAC.unambiguous_dna, "-"))
 		alignSeqList = []
 		clusterSeqTmp = self.clusterSeq
 		exactMatchCount = 0
