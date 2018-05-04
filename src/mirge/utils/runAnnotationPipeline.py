@@ -64,76 +64,84 @@ def fillTerminal(preMiRSeq, mirnaLibSeq, mirnaSeq, readSeq, start, indexValue):
 	#print readSeq
 	#print '$$$$$$'
 	# fill terminals of preMiRSeq and mirnaLibSeq
-	indexTmp = preMiRSeq.index(mirnaSeq)
-	if indexTmp+len(mirnaSeq)+6 > len(preMiRSeq):
-		preMiRSeq = preMiRSeq+'-'*(indexTmp+len(mirnaSeq)+6-len(preMiRSeq))
-	else:
-		mirnaLibSeq = mirnaLibSeq+'-'*(len(preMiRSeq)-indexTmp-len(mirnaSeq)-6)
-	if indexTmp < 2:
-		preMiRSeq = '-'*(2-indexTmp)+preMiRSeq
-	else:
-		mirnaLibSeq = '-'*(indexTmp-2)+mirnaLibSeq
-	preMiRSeqOut = preMiRSeq
-	mirnaLibSeqOut = mirnaLibSeq
-	# fill terminals of mirnaSeq
-	indexTmp2 = preMiRSeqOut.index(mirnaSeq)
-	mirnaSeq = mirnaSeq+'-'*(len(preMiRSeqOut)-indexTmp2-len(mirnaSeq))
-	mirnaSeq = '-'*indexTmp2+mirnaSeq
-	mirnaSeqOut = mirnaSeq
-	# fill terminals of readSeq
-	# this is the situation of miRNAs
-	if indexValue == 0:
-		i = 0
-		headAdd = ''
-		for item in mirnaLibSeqOut:
-			if item == '-':
-				headAdd = headAdd + '-'
-			else:
-				i = i + 1
-				if i == start:
-					break
-				else:
+	try:
+		indexTmp = preMiRSeq.index(mirnaSeq)
+		indexState = True
+		if indexTmp+len(mirnaSeq)+6 > len(preMiRSeq):
+			preMiRSeq = preMiRSeq+'-'*(indexTmp+len(mirnaSeq)+6-len(preMiRSeq))
+		else:
+			mirnaLibSeq = mirnaLibSeq+'-'*(len(preMiRSeq)-indexTmp-len(mirnaSeq)-6)
+		if indexTmp < 2:
+			preMiRSeq = '-'*(2-indexTmp)+preMiRSeq
+		else:
+			mirnaLibSeq = '-'*(indexTmp-2)+mirnaLibSeq
+		preMiRSeqOut = preMiRSeq
+		mirnaLibSeqOut = mirnaLibSeq
+		# fill terminals of mirnaSeq
+		indexTmp2 = preMiRSeqOut.index(mirnaSeq)
+		mirnaSeq = mirnaSeq+'-'*(len(preMiRSeqOut)-indexTmp2-len(mirnaSeq))
+		mirnaSeq = '-'*indexTmp2+mirnaSeq
+		mirnaSeqOut = mirnaSeq
+		# fill terminals of readSeq
+		# this is the situation of miRNAs
+		if indexValue == 0:
+			i = 0
+			headAdd = ''
+			for item in mirnaLibSeqOut:
+				if item == '-':
 					headAdd = headAdd + '-'
-		readSeq = headAdd + readSeq
-		readSeq = readSeq + '-'*(len(mirnaLibSeqOut)-len(readSeq))
-	# this is the situration of isomiRs
-	else:
-		trimmedHeadSeq = readSeq[:1]
-		trimmedTailSeq = readSeq[-2:]
-		trimmedSeq = readSeq[1:-2]
-		if len(readSeq)-1 > len(mirnaLibSeqOut)-leftDashCount(mirnaLibSeqOut)-start+1:
-			countTmp = len(readSeq)-1-len(mirnaLibSeqOut)+leftDashCount(mirnaLibSeqOut)+start-1
-			mirnaLibSeqOut = mirnaLibSeqOut + '-'*countTmp
-			preMiRSeqOut = preMiRSeqOut + '-'*countTmp
-			mirnaSeqOut = mirnaSeqOut + '-'*countTmp
+				else:
+					i = i + 1
+					if i == start:
+						break
+					else:
+						headAdd = headAdd + '-'
+			readSeq = headAdd + readSeq
+			readSeq = readSeq + '-'*(len(mirnaLibSeqOut)-len(readSeq))
+		# this is the situration of isomiRs
 		else:
-			countTmp = len(mirnaLibSeqOut)-leftDashCount(mirnaLibSeqOut)-start+1-len(readSeq)+1
-			readSeq = readSeq+'-'*countTmp
-		if start-1+leftDashCount(mirnaLibSeqOut)<1:
-			preMiRSeqOut = '-'*(1-start+1-leftDashCount(mirnaLibSeqOut))+preMiRSeqOut
-			mirnaSeqOut = '-'*(1-start+1-leftDashCount(mirnaLibSeqOut))+mirnaSeqOut
-			mirnaLibSeqOut = '-'*(1-start+1-leftDashCount(mirnaLibSeqOut))+mirnaLibSeqOut
-		else:
-			readSeq = '-'*(start-1+leftDashCount(mirnaLibSeqOut)-1)+readSeq
-	readSeqOut = readSeq
-	#print preMiRSeqOut
-	#print mirnaLibSeqOut
-	#print mirnaSeqOut
-	#print readSeqOut
-	#print '######'
-	#if preMiRSeqOut[0] == '-':
-	#	print preMiRSeqOut
-	#	print mirnaLibSeqOut
-	#	print mirnaSeqOut
-	#	print readSeqOut
-	#	print '@@@@@@'
-	#if preMiRSeqOut[-1] == '-':
-	#	print preMiRSeqOut
-	#	print mirnaLibSeqOut
-	#	print mirnaSeqOut
-	#	print readSeqOut
-	#	print '&&&&&&'
-	return (preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut)
+			trimmedHeadSeq = readSeq[:1]
+			trimmedTailSeq = readSeq[-2:]
+			trimmedSeq = readSeq[1:-2]
+			if len(readSeq)-1 > len(mirnaLibSeqOut)-leftDashCount(mirnaLibSeqOut)-start+1:
+				countTmp = len(readSeq)-1-len(mirnaLibSeqOut)+leftDashCount(mirnaLibSeqOut)+start-1
+				mirnaLibSeqOut = mirnaLibSeqOut + '-'*countTmp
+				preMiRSeqOut = preMiRSeqOut + '-'*countTmp
+				mirnaSeqOut = mirnaSeqOut + '-'*countTmp
+			else:
+				countTmp = len(mirnaLibSeqOut)-leftDashCount(mirnaLibSeqOut)-start+1-len(readSeq)+1
+				readSeq = readSeq+'-'*countTmp
+			if start-1+leftDashCount(mirnaLibSeqOut)<1:
+				preMiRSeqOut = '-'*(1-start+1-leftDashCount(mirnaLibSeqOut))+preMiRSeqOut
+				mirnaSeqOut = '-'*(1-start+1-leftDashCount(mirnaLibSeqOut))+mirnaSeqOut
+				mirnaLibSeqOut = '-'*(1-start+1-leftDashCount(mirnaLibSeqOut))+mirnaLibSeqOut
+			else:
+				readSeq = '-'*(start-1+leftDashCount(mirnaLibSeqOut)-1)+readSeq
+		readSeqOut = readSeq
+		#print preMiRSeqOut
+		#print mirnaLibSeqOut
+		#print mirnaSeqOut
+		#print readSeqOut
+		#print '######'
+		#if preMiRSeqOut[0] == '-':
+		#	print preMiRSeqOut
+		#	print mirnaLibSeqOut
+		#	print mirnaSeqOut
+		#	print readSeqOut
+		#	print '@@@@@@'
+		#if preMiRSeqOut[-1] == '-':
+		#	print preMiRSeqOut
+		#	print mirnaLibSeqOut
+		#	print mirnaSeqOut
+		#	print readSeqOut
+		#	print '&&&&&&'
+	except ValueError:
+		indexState = False
+		preMiRSeqOut = ''
+		mirnaLibSeqOut = ''
+		mirnaSeqOut = ''
+		readSeqOut = ''
+	return (preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut, indexState)
 
 def _add_cigar_char(counter, cache):
 	if counter == 1:
@@ -389,15 +397,18 @@ def updateIsomiRDic2(isomiRContentDic, hairpinNameSeqDic, mirnaLibNameSeqDic, in
 					sys.exit(1)
 				preMiRSeq = preMiRSeqCanonical[:index_tmp]+mirnaSeq+preMiRSeqCanonical[index_tmp+len(mirnaSeq):]
 			# fill the head and tail part across preMiRSeq, mirnaLibSeq, mirnaSeq and readSeq via '-', so that the attribute of type and variant can be determined.
-			preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut = fillTerminal(preMiRSeq, mirnaLibSeq, mirnaSeq, readSeq, start, indexValue)
-			type, variant, pre_start, pre_end, cigarValue = analyzeAlignment(preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut)
-			isomiRContentDic[seqKey]['type'] = type
-			isomiRContentDic[seqKey]['pre_start'] = str(pre_start)
-			isomiRContentDic[seqKey]['pre_end'] = str(pre_end)
-			isomiRContentDic[seqKey]['variant'] = str(variant)
-			isomiRContentDic[seqKey]['strand'] = '+'
-			isomiRContentDic[seqKey]['annot'] = 1
-			isomiRContentDic[seqKey]['cigar'] = cigarValue
+			preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut, indexState = fillTerminal(preMiRSeq, mirnaLibSeq, mirnaSeq, readSeq, start, indexValue)
+			if indexState:
+				type, variant, pre_start, pre_end, cigarValue = analyzeAlignment(preMiRSeqOut, mirnaLibSeqOut, mirnaSeqOut, readSeqOut)
+				isomiRContentDic[seqKey]['type'] = type
+				isomiRContentDic[seqKey]['pre_start'] = str(pre_start)
+				isomiRContentDic[seqKey]['pre_end'] = str(pre_end)
+				isomiRContentDic[seqKey]['variant'] = str(variant)
+				isomiRContentDic[seqKey]['strand'] = '+'
+				isomiRContentDic[seqKey]['annot'] = 1
+				isomiRContentDic[seqKey]['cigar'] = cigarValue
+			else:
+				del isomiRContentDic[seqKey]
 
 def writeSeqToAnnot(lengthFilter, seqDic, outputdir):
 	with open(os.path.join(outputdir, 'SeqToAnnot.fasta'), 'w') as outf:
