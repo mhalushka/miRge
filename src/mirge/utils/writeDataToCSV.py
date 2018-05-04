@@ -4,7 +4,7 @@ from Bio.Seq import Seq
 from Bio import SeqIO
 from Bio import pairwise2
 from Bio.Alphabet import IUPAC, Gapped
-from Bio.Align.Generic import Alignment
+#from Bio.Align.Generic import Alignment
 from scipy import stats
 import math
 import sys
@@ -99,7 +99,7 @@ def checkSeqList(seqList, seqDic):
 	return state
 
 def align2TargetSeq(targetSeq, seqList):
-	align = Alignment(Gapped(IUPAC.unambiguous_dna, "-"))
+	#align = Alignment(Gapped(IUPAC.unambiguous_dna, "-"))
 	alignSeqList = []
 	stateList = []
 	for i in range(len(seqList)):
