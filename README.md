@@ -40,7 +40,7 @@ The source code is hosted at: https://github.com/mhalushka/miRge.<br />
 miRge2.0 is available in Bioconda now and can be installed via conda, the installation is to run:<br />
    `conda install mirge`<br />
 
-miRge2.0 can be alsp installed from the source code by pip:<br />
+miRge2.0 also can be installed from the source code by pip:<br />
 1) Download miRge2.0 source code from https://github.com/mhalushka/miRge and unzip the zipped file folder.<br />
 2) If the package of wheel is not installed, run `pip install wheel` to install it.<br />
 3) Change the directory to miRge2.0's directory and run `python setup.py bdist_wheel` to build a wheel file for the subsequent installation via pip.<br />
@@ -58,7 +58,7 @@ miRge2.0 was tested on the specific version of required softwares and python pac
 How to use it
 -------------
 
-miRge2.0 has two module: annotate and predict.
+miRge2.0 has two modules: annotate and predict.
 
 ### Annotate mode
 
