@@ -29,21 +29,21 @@ miRge2.0 relies on a huge number of libraries like: <br />
 
 Libraries of six species including ___human___, ___mouse___, ___rat___, ___zebrafish___, ___nematode___ and ___fruitfly___ can be downloaded separately by wget. `wget -O human.tar.gz https://jh.box.com/shared/static/rj7ufy5v15uw7ytsyyrsryw99u7ml82j.gz`; <br />`wget -O mouse.tar.gz https://jh.box.com/shared/static/z2bcey8j9e9nxnvpmb4fm88zzq3da4m1.gz`; <br />`wget -O rat.tar.gz https://jh.box.com/shared/static/mmztv42j8h7snk0eo80o7a7t30it4q9f.gz`; <br />`wget -O zebrafish.tar.gz https://jh.box.com/shared/static/nwn7jzn5ekgm51k7jlk43a6h75aasgr1.gz`; <br />`wget -O nematode.tar.gz https://jh.box.com/shared/static/boubl0g28b0xj952e8bhfmbds056gdvi.gz`; <br />`wget -O fruitfly.tar.gz https://jh.box.com/shared/static/ilrnq62cp06pviir5t0mh85aqet0fmjq.gz`.
 After unpacking the downloaded ***.tar.gz files to the new directory of miRge.Libs, the folder named by species contains three folders: index.Libs (libraries Part 1), fasta.Libs (libraries Part 2) and annotation.Libs (libraries Part 3). The absolute directory of miRge.Libs is used as the value of parameter ‘-lib’ in miRge2.0. <br /><br />
-If the users want to build the libraries for other species, they can use scripts miRge_bowtie_build.py and miRge_pckls_build.py which can be downloaded from https://github.com/mhalushka/miRge2.0_build, wherein miRge_bowtie_build.py is used to build bowtie index files and miRge_pckls_build.py is used to transform ***_genome_repeats.GTF and ***_genome.fa in oder to accelerate the speed of reading larg files into memory. 
+If the users want to build the libraries for other species, they can use scripts miRge_bowtie_build.py and miRge_pckls_build.py which can be downloaded from https://github.com/mhalushka/miRge_build, wherein miRge_bowtie_build.py is used to build bowtie index files and miRge_pckls_build.py is used to transform ***_genome_repeats.GTF and ***_genome.fa in oder to accelerate the speed of reading larg files into memory. 
 
 ### Install miRge2.0
 
 miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of Bowtie (v1.1.1 or v1.1.2; http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (v1.5; http://samtools.sourceforge.net/) and RNAfold (v2.3.5; http://www.tbi.univie.ac.at/RNA). <br />
 It was built with Python (v2.7.*) programming language and Python-related libraries, including cutadapt(>= v1.11), biopython(>= v1.68), numpy(>= v1.11.3), scipy(>= v0.17.0), matplotlib(>= v2.1.1), pandas(>= v0.21.0), sklearn(>= v0.18.1), reportlab(>= v3.3.0) and forgi(v0.20). <br />
-The source code is hosted at: https://github.com/mhalushka/miRge-2.0.<br />
-miRge2.0 can be installed from the source code by pip:<br />
-1) Download miRge2.0 source code from https://github.com/mhalushka/miRge-2.0 and unzip the zipped file folder.<br />
+The source code is hosted at: https://github.com/mhalushka/miRge.<br />
+miRge2.0 is available in Bioconda now and can be installed via conda, the installation is to run:<br />
+   `conda install mirge`<br />
+
+miRge2.0 can be alsp installed from the source code by pip:<br />
+1) Download miRge2.0 source code from https://github.com/mhalushka/miRge and unzip the zipped file folder.<br />
 2) If the package of wheel is not installed, run `pip install wheel` to install it.<br />
 3) Change the directory to miRge2.0's directory and run `python setup.py bdist_wheel` to build a wheel file for the subsequent installation via pip.<br />
 4) Run `pip install ./dist/mirge-2.0-py2-none-any.whl` to install miRge2.0.<br />
-
-miRge2.0 will be in Bioconda as well (in process), the installation is to run:<br />
-   `conda install mirge`<br />
 
 
 ### Troubleshooting installation<br />
@@ -159,6 +159,8 @@ miRge2.0 has two module: annotate and predict.
 
 Changelog
 ---------
+
+**05-06-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rebuild the miRNA libraries from the newly released miRBase v22.
 
 **02-22-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add a `-ex` option. If the canonical reads count is less than 2 or the proportion of canonical reads is less that the set threshold, the miRNA will not be counted in the ouput files: miR.Counts.csv and miR.RPM.csv.
 
