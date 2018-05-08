@@ -25,7 +25,7 @@ Installation
 miRge2.0 relies on a huge number of libraries like: <br />
 1) Bowtie indexes of genome, hairping, mature miRNAs in miRBase, mature miRNAs in miRGeneDB, mRNA, rRNA, snoRNA, mature tRNA, primary tRNA, other ncRNA and spike-in sequences (optional) <br />
 2) Sequences of genome, mature miRNAs (including SNP information) in miRBase and miRGeneDB <br />
-3) Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase v22 and MirGeneDB v2.0 <br />
+3) Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase and MirGeneDB <br />
 
 Libraries of six species including ___human___, ___mouse___, ___rat___, ___zebrafish___, ___nematode___ and ___fruitfly___ can be downloaded separately by wget. `wget -O human.tar.gz https://jh.box.com/shared/static/rj7ufy5v15uw7ytsyyrsryw99u7ml82j.gz`; <br />`wget -O mouse.tar.gz https://jh.box.com/shared/static/z2bcey8j9e9nxnvpmb4fm88zzq3da4m1.gz`; <br />`wget -O rat.tar.gz https://jh.box.com/shared/static/mmztv42j8h7snk0eo80o7a7t30it4q9f.gz`; <br />`wget -O zebrafish.tar.gz https://jh.box.com/shared/static/nwn7jzn5ekgm51k7jlk43a6h75aasgr1.gz`; <br />`wget -O nematode.tar.gz https://jh.box.com/shared/static/boubl0g28b0xj952e8bhfmbds056gdvi.gz`; <br />`wget -O fruitfly.tar.gz https://jh.box.com/shared/static/ilrnq62cp06pviir5t0mh85aqet0fmjq.gz`.
 After unpacking the downloaded ***.tar.gz files to the new directory of miRge.Libs, the folder named by species contains three folders: index.Libs (libraries Part 1), fasta.Libs (libraries Part 2) and annotation.Libs (libraries Part 3). The absolute directory of miRge.Libs is used as the value of parameter ‘-lib’ in miRge2.0. <br /><br />
@@ -36,6 +36,7 @@ If the users want to build the libraries for other species, they can use scripts
 miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of Bowtie (v1.1.1 or v1.1.2; http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (v1.5; http://samtools.sourceforge.net/) and RNAfold (v2.3.5; http://www.tbi.univie.ac.at/RNA). <br />
 It was built with Python (v2.7.*) programming language and Python-related libraries, including cutadapt(>= v1.11), biopython(>= v1.68), numpy(>= v1.11.3), scipy(>= v0.17.0), matplotlib(>= v2.1.1), pandas(>= v0.21.0), sklearn(>= v0.18.1), reportlab(>= v3.3.0) and forgi(v0.20). <br />
 The source code is hosted at: https://github.com/mhalushka/miRge.<br />
+
 miRge2.0 is available in Bioconda now and can be installed via conda, the installation is to run:<br />
    `conda install mirge`<br />
 
@@ -72,7 +73,7 @@ miRge2.0 has two module: annotate and predict.
                             two options: 1. A file where each row represents one
                             sample name; 2. *.fastq *.fastq ...
       -o <dir>              the directory of the outputs (default: current directory)
-      -d <string required>  the miRNA database (default: miRBase. miRGeneDB is optional)
+      -d <string required>  the miRNA database (default: miRBase. MirGeneDB is optional)
       -pb <dir required>    the path to the system's bowtie binary
       -lib <dir required>   the path to the miRge libraries
       -sp <string required>
@@ -111,7 +112,7 @@ miRge2.0 has two module: annotate and predict.
                             two options: 1. A file where each row represents one
                             sample name; 2. *.fastq *.fastq ...
       -o <dir>              the directory of the outputs (default: current directory)
-      -d <string required>  the miRNA database (default: miRBase. miRGeneDB is optional)
+      -d <string required>  the miRNA database (default: miRBase. MirGeneDB is optional)
       -pb <dir required>    the path to the system's bowtie binary
       -lib <dir required>   the path to the miRge libraries
       -sp <string required>
@@ -160,7 +161,7 @@ miRge2.0 has two module: annotate and predict.
 Changelog
 ---------
 
-**05-06-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rebuild the miRNA libraries from the newly released miRBase v22.
+**05-06-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rebuild the miRNA libraries from the newly released miRBase v22 and MirGeneDB v2.0.
 
 **02-22-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add a `-ex` option. If the canonical reads count is less than 2 or the proportion of canonical reads is less that the set threshold, the miRNA will not be counted in the ouput files: miR.Counts.csv and miR.RPM.csv.
 
