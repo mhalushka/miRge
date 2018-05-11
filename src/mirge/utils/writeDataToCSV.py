@@ -936,8 +936,9 @@ def writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, log
 		if len(miRNAList2) <= 5:
 			print 'The number of A-to-I editing sites for is less than 10 so that no heatmap is drawn.'
 		else:
-			PopenTmp2 = subprocess.Popen(['which', 'miRge2.0.py'], stdout=subprocess.PIPE)
-			result2 = PopenTmp2.communicate()[0]
-			RscriptDir = os.path.join(os.path.dirname(result2.strip()), 'rScripts', 'A-to-I_plot.R')
+			#PopenTmp2 = subprocess.Popen(['which', 'miRge2.0.py'], stdout=subprocess.PIPE)
+			#result2 = PopenTmp2.communicate()[0]
+			RscriptDirTmp = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir))
+			RscriptDir = os.path.join(RscriptDirTmp, 'rScripts', 'A-to-I_plot.R')
 			outA2Ipdf = os.path.join(outputdir, 'a-to-I.heatmap.pdf')
 			os.system('Rscript %s %s %s'%(RscriptDir, a2IEditingFileTrans, outA2Ipdf))
