@@ -3,13 +3,18 @@
 # CHANGE LOG:
 # 2-17-2017 YL conduct calling Bowtie to mapping.
 # 4-14-2017 YL reorgonize the code and transform the scattered script files into unify classes and functions.
-# 6-23-2017 YL modify the input interface and integrate different modules.
+# 6-23-2017 YL modify the input interface and integrate the predictive model.
+# 9-22-2017 YL add a '-ai' option.
+# 1-01-2018 YL add a '-gff' option.
+# 2-22-2018 YL add a '-ex' option.
+# 5-06-2018 YL rebuild the miRNA libraries from the newly released miRBase v22 and MirGeneDB v2.0 and tRNA libraries (including mature tRNA and primary tRNA).
+
 
 __author__ = 'Marc Halushka, Yin Lu'
-__copyright__ = 'Copyright 2017, Johns Hopkins University'
+__copyright__ = 'Copyright 2018, Johns Hopkins University'
 __credits__ = ['Marc Halushka', 'Yin Lu']
 __license__ = 'GPL'
-__version__ = '1.0.0'
+__version__ = '2.0'
 __maintainer__ = 'Yin Lu'
 __email__ = 'ylu61@jhmi.edu'
 
