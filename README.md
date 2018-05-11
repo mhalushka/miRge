@@ -127,7 +127,7 @@ miRge2.0 has two modules: annotate and predict.
       -pr <dir required>    the path to the system's rnafold binary
       -ex <float>           the threshold of the proportion of canonical reads for the
                             miRNAs to determine whether keeping them or not when counting.
-                            Users can set it between 0.02 and 0.5 (default: 0.1)
+                            Users can set it between 0 and 0.5 (default: 0.1)
       -ad <string>          the adapter need to be removed which could be
                             illumina, ion or a defined sequence (default: none)
       -phred64              phred64 format (default: 64)
