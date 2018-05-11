@@ -42,7 +42,7 @@ miRge2.0 is available in bioconda now and can be installed via conda. You will n
     `conda config --add channels conda-forge`<br />
     `conda config --add channels bioconda`<br />
 Then install mirge by running:<br />
-   `conda install mirge`<br />
+    `conda install mirge`<br />
 
 miRge2.0 also can be installed from the source code by pip:<br />
 1) Download miRge2.0 source code from https://github.com/mhalushka/miRge and unzip the zipped file folder.<br />
