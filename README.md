@@ -37,7 +37,7 @@ miRge2.0 is implemented as a Python program running on a Linux/Unix platform tha
 It was built with Python (v2.7.*) programming language and Python-related libraries, including cutadapt(>= v1.11), biopython(>= v1.68), numpy(>= v1.11.3), scipy(>= v0.17.0), matplotlib(>= v2.1.1), pandas(>= v0.21.0), sklearn(>= v0.18.1), reportlab(>= v3.3.0) and forgi(v0.20). <br />
 The source code is hosted at: https://github.com/mhalushka/miRge.<br />
 
-miRge2.0 is available in Bioconda now and can be installed via conda. You will need to add the bioconda channel as well as the other channels bioconda depends on. It is important to add them in this order so that the priority is set correctly (that is, bioconda is highest priority).<br />
+miRge2.0 is available in bioconda now and can be installed via conda. You will need to add the bioconda channel as well as the other channels bioconda depends on. It is important to add them in this order so that the priority is set correctly (that is, bioconda is highest priority).<br />
     `conda config --add channels defaults`<br />
     `conda config --add channels conda-forge`<br />
     `conda config --add channels bioconda`<br />
