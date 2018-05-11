@@ -11,7 +11,7 @@ def parseArgument():
 ##                                                                              ##\n\
 ##      miRge2.0 (Comprehensive analysis of miRNA sequencing Data)              ##\n\
 ##                                                                              ##\n\
-##      last change: 05/02/2017                                                 ##\n\
+##      last change: 05/06/2018                                                 ##\n\
 ##                                                                              ##\n\
 ##                                                                              ##\n\
 ##################################################################################\n\
