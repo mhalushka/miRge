@@ -62,7 +62,7 @@ miRge2.0 was tested on the specific version of required softwares and python pac
 How to use it
 -------------
 
-miRge2.0 has two modules: annotate and predict. In order to make miRge2.0 run smoothly, setting the number of imput samples to be <= 20 and memory size to be >= 8 GB is recommended.
+miRge2.0 has two modules: annotate and predict. In order to make miRge2.0 run smoothly, setting the number of imput samples to be <= 20 and memory size to be >= 8 GB is recommended. Please keep in mind that predict module may take more memories
 
 ### Annotate mode
 
