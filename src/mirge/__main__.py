@@ -186,7 +186,7 @@ def main():
 	# Read the sampleListFile.
 	dir_sample = os.path.split(os.path.abspath(sampleListTmp[0]))[0]
 	sampleListRaw = []
-	if all(os.path.basename(sampleTmp).split('.')[-1] == 'fastq' for sampleTmp in sampleListTmp):
+	if all(os.path.basename(sampleTmp).split('.')[-1] == 'fastq' or '.'.join(os.path.basename(sampleTmp).split('.')[-2:]) == 'fastq.gz' for sampleTmp in sampleListTmp):
 		for sampleTmp in sampleListTmp:
 			if os.path.isfile(os.path.abspath(sampleTmp)):
 				pass
@@ -194,7 +194,7 @@ def main():
 				print "%s can't be found in current directory. Please check it."%(sampleTmp)
 				sys.exit(1)
 		sampleListRaw = sampleListTmp
-	elif (len(sampleListTmp) == 1 and sampleListTmp[0].split('.')[-1] != 'fastq'):
+	elif (len(sampleListTmp) == 1 and (os.path.basename(sampleListTmp[0]).split('.')[-1] != 'fastq' or '.'.join(os.path.basename(sampleListTmp[0]).split('.')[-2:]) != 'fastq.gz')):
 		try:
 			with open(sampleListTmp[0], 'r') as inf:
 				for line in inf:
@@ -206,7 +206,7 @@ def main():
 							print '%s cannot be found, please check the path of the sample file.'%(line.strip())
 							sys.exit(1)
 		except IOError,e:
-			print '%s is not a file, please check it.'%(sampleListFile)
+			print '%s is not a file, please check it.'%(sampleListTmp[0])
 			sys.exit(1)
 	else:
 		print "The format of input argument '-s' is wrong, please check it."
@@ -235,9 +235,17 @@ def main():
 	
 	# perform quantitation analysis.
 	time_0 = time.time()
-	sampleList = [os.path.basename(item) for item in sampleListRaw]
+	sampleList_tmp = [os.path.basename(item) for item in sampleListRaw]
+	sampleList = []
+	for item in sampleList_tmp:
+		if item[-3:] == '.gz':
+			sampleList.append(item[:-3])
+		else:
+			sampleList.append(item)
 	for i, sampleFile in enumerate(sampleListRaw):
 		sampleFileName = os.path.basename(sampleFile)
+		if sampleFileName[-3:] == '.gz':
+			sampleFileName = sampleFileName[:-3]
 		print 'Performing quantitation analysis of %s...'%(sampleFileName)
 		dicRmp = {}
 		dicRmp.update({'filename' : sampleFileName})
