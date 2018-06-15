@@ -62,7 +62,7 @@ miRge2.0 was tested on the specific version of required softwares and python pac
 How to use it
 -------------
 
-miRge2.0 has two modules: annotate and predict. In order to make miRge2.0 run smoothly, setting the number of imput samples to be <= 20 and memory size to be >= 8 GB is recommended. Please keep in mind that predict module may take more memories.
+miRge2.0 has two modules: annotate and predict.
 
 ### Annotate mode
 
@@ -75,7 +75,7 @@ miRge2.0 has two modules: annotate and predict. In order to make miRge2.0 run sm
       -h, --help            show this help message and exit
       -s [sample <required> [sample <required> ...]]
                             two options: 1. A file where each row represents one
-                            sample name; 2. *.fastq *.fastq ...
+                            sample name; 2. *.fastq *.fastq ... Or *.fastq.gz *.fastq.gz ...
       -o <dir>              the directory of the outputs (default: current directory)
       -d <string required>  the miRNA database (default: miRBase. MirGeneDB is optional)
       -pb <dir required>    the path to the system's bowtie binary
@@ -114,7 +114,7 @@ miRge2.0 has two modules: annotate and predict. In order to make miRge2.0 run sm
       -h, --help            show this help message and exit
       -s [sample <required> [sample <required> ...]]
                             two options: 1. A file where each row represents one
-                            sample name; 2. *.fastq *.fastq ...
+                            sample name; 2. *.fastq *.fastq ... Or *.fastq.gz *.fastq.gz ...
       -o <dir>              the directory of the outputs (default: current directory)
       -d <string required>  the miRNA database (default: miRBase. MirGeneDB is optional)
       -pb <dir required>    the path to the system's bowtie binary
@@ -164,6 +164,7 @@ miRge2.0 has two modules: annotate and predict. In order to make miRge2.0 run sm
 
 Changelog
 ---------
+**06-15-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The compressed format of fastq files, such as "*.fastq.gz", is supported.
 
 **05-06-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rebuild the miRNA libraries from the newly released miRBase v22 and MirGeneDB v2.0.
 
