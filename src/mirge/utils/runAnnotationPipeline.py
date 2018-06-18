@@ -332,8 +332,8 @@ def inferPremiRName(miRNameCanonical, miRNamePreNameDic, miRNA_database):
 					except KeyError:
 						# In this case, the pre miRNA name can't be retrieved from the *.gff3 file meaning the miRNA's pre miRNA doesn't have coordinates.
 						# This may happen in miRBase, so the pre miRNA name will be speculated.
-						preName = miRNameCanonical.replace('_5p', '')
-						preName = preName.replace('_3p', '')
+						preName = miRNameCanonical.replace('-5p', '')
+						preName = preName.replace('-3p', '')
 						preName = preName.replace('miR', 'mir')
 		else:
 			# infer pre miRNA name.
