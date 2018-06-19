@@ -534,23 +534,25 @@ def main():
 							modelDir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'models')
 							fileToPredict = outfile4+'_modified_selected_sorted_features_updated_stableClusterSeq_15.tsv'
 							sampleNameTmp = '_'.join(os.path.basename(fileToPredict).split('_')[2:-10])
-							if os.path.isfile(os.path.join(modelDir, species+'_svc_model.pkl')) and os.path.isfile(os.path.join(modelDir, 'total_features_namelist.txt')):
-								novelOutputDir = os.path.join(outputdir, '_'.join(os.path.splitext(file)[0].split('_')[2:])+'_novel_miRNAs')
-								os.mkdir(novelOutputDir)
-								#print 'Start to predict'
-								# Refine the feature files 
-								preprocess_featureFiles(fileToPredict, os.path.join(modelDir, 'total_features_namelist.txt'))
-								model_predict(fileToPredict, os.path.join(modelDir, species+'_svc_model.pkl'))
-								novelmiRNALListFile = os.path.join(os.path.dirname(fileToPredict), sampleNameTmp+'_novel_miRNAs_miRge2.0.csv')
-								featureFile = fileToPredict
-								clusterFile = outfile4+'_modified_selected_sorted_cluster.txt'
-								write_novel_report(novelmiRNALListFile, featureFile, clusterFile, rnafoldCmdTmp)
-								os.system('cp %s/*.pdf %s 2>/dev/null'%(outputdirTemp, novelOutputDir))
-								os.system('cp %s/*_novel_miRNAs_report.csv %s 2>/dev/null'%(outputdirTemp, novelOutputDir))
-								time_8 = time.time()
-								print 'Prediction of novel miRNAs Completed (%.2f sec)'%(time_8-time_7)
+							if species not in ['human', 'mouse']:
+								speciesType = 'others'
 							else:
-								print "The model file located at %s and the feature namelist files located at %s don't exsit.\nPlease check them."%(os.path.join(modelDir, species+'svc_model.pkl'), os.path.join(modelDir, 'total_features_namelist.txt'))
+								speciesType = species
+							if speciesType == 'others':
+								print 'Notice: For %s, the predictive model is trained on human and mouse data.'%(species)
+							novelOutputDir = os.path.join(outputdir, '_'.join(os.path.splitext(file)[0].split('_')[2:])+'_novel_miRNAs')
+							os.mkdir(novelOutputDir)
+							# Refine the feature files 
+							preprocess_featureFiles(fileToPredict, os.path.join(modelDir, 'total_features_namelist.txt'))
+							model_predict(fileToPredict, os.path.join(modelDir, speciesType+'_svc_model.pkl'))
+							novelmiRNALListFile = os.path.join(os.path.dirname(fileToPredict), sampleNameTmp+'_novel_miRNAs_miRge2.0.csv')
+							featureFile = fileToPredict
+							clusterFile = outfile4+'_modified_selected_sorted_cluster.txt'
+							write_novel_report(novelmiRNALListFile, featureFile, clusterFile, rnafoldCmdTmp)
+							os.system('cp %s/*.pdf %s 2>/dev/null'%(outputdirTemp, novelOutputDir))
+							os.system('cp %s/*_novel_miRNAs_report.csv %s 2>/dev/null'%(outputdirTemp, novelOutputDir))
+							time_8 = time.time()
+							print 'Prediction of novel miRNAs Completed (%.2f sec)'%(time_8-time_7)
 			if fileType == 'unmapped.csv':
 				os.system('rm -r %s'%(outputdir2))
 
