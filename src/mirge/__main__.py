@@ -8,7 +8,7 @@
 # 1-01-2018 YL add a '-gff' option.
 # 2-22-2018 YL add a '-ex' option.
 # 5-06-2018 YL rebuild the miRNA libraries from the newly released miRBase v22 and MirGeneDB v2.0 and tRNA libraries (including mature tRNA and primary tRNA).
-
+# 6-26-2018 YL added the function of detecting tRFs
 
 __author__ = 'Marc Halushka, Yin Lu'
 __copyright__ = 'Copyright 2018, Johns Hopkins University'
@@ -50,6 +50,7 @@ from mirge.utils.miRNAmerge import *
 from mirge.utils.filter import *
 from mirge.utils.generateReport import *
 from mirge.utils.writeDataToCSV import *
+from mirge.utils.writeDataToCSV import addDashNew
 from mirge.utils.convert2Fasta import *
 from mirge.utils.cluster_basedon_location import *
 from mirge.utils.preTrimClusteredSeq import *
@@ -156,6 +157,104 @@ def main():
 		miRNamePreNameDic = None
 		isomiRContentDic = None
 
+	trf_output = args.trf_output
+	if trf_output:
+		# trna_stru_file is the structure of mature tRNA
+		trna_stru_file = os.path.join(libraryPath, species, 'annotation.Libs', species+'_trna.str')
+		trnaStruDic = {}
+		try:
+			with open(trna_stru_file, 'r') as inf:
+				line = inf.readline()
+				while line != '':
+					trnaName = line.strip()[1:]
+					line = inf.readline()
+					trnaSeq = line.strip()
+					line = inf.readline()
+					trnaStru = line.strip()
+					# 1-based position
+					anticodonStart = trnaStru.index('XXX')+1
+					anticodonEnd = anticodonStart+2
+					trnaStruDic.update({trnaName:{'seq':trnaSeq, 'stru':trnaStru, 'anticodonStart':anticodonStart, 'anticodonEnd':anticodonEnd}})
+					line = inf.readline()
+		except IOError:
+			print >> sys.stderr, "%s does not exsit. Please check it."%(trna_stru_file)
+			sys.exit(1)
+		
+		trna_aa_anticodon_file = os.path.join(libraryPath, species, 'annotation.Libs', species+'_trna_aminoacid_anticodon.csv')
+		trnaAAanticodonDic = {}
+		try:
+			with open(trna_aa_anticodon_file, 'r') as inf:
+				for line in inf:
+					contentTmp = line.strip().split(',')
+					trnaAAanticodonDic.update({contentTmp[0]:{'aaType':contentTmp[1], 'anticodon':contentTmp[2]}})
+		except IOError:
+			print >> sys.stderr, "%s does not exsit. Please check it."%(trna_aa_anticodon_file)
+			sys.exit(1)
+		
+		trfContentDic = {}
+		# the keys of trfContentDic are tRF sequences. The value is a dictionary and the keys of the dictionary are 'uid', 'count', 'RPM', 'location'
+		trna_duplicated_list_file = os.path.join(libraryPath, species, 'annotation.Libs', species+'_trna_deduplicated_list.csv')
+		duptRNA2UniqueDic = {}
+		try:
+			with open(trna_duplicated_list_file, 'r') as inf:
+				line = inf.readline()
+				line = inf.readline()
+				while line != '':
+					contentTmp = line.strip().split(',')
+					for item in contentTmp[1].split('/'):
+						duptRNA2UniqueDic.update({item.strip():contentTmp[0].strip()})
+					line = inf.readline()
+		except IOError:
+			print >> sys.stderr, "%s does not exsit. Please check it."%(trna_duplicated_list_file)
+			sys.exit(1)
+		
+		# Load predefined tRF loci information file
+		tRNAtrfDic = {}
+		tRF_infor_file = os.path.join(libraryPath, species, 'annotation.Libs', species+'_tRF_infor.csv')
+		try:
+			with open(tRF_infor_file, 'r') as  inf:
+				line = inf.readline()
+				line = inf.readline()
+				while line != '':
+					content = line.strip().split(',')
+					tRNAName = content[0].split('_Cluster')[0]
+					tRNAClusterName = content[0]
+					seq = content[4]
+					tRNAlength = len(content[5])
+					start = int(content[3].split('-')[0])
+					end = int(content[3].split('-')[1])
+					if tRNAName not in tRNAtrfDic.keys():
+						tRNAtrfDic.update({tRNAName:{}})
+					tRNAtrfDic[tRNAName].update({addDashNew(seq, tRNAlength, start, end):tRNAClusterName})
+					line = inf.readline()
+		except IOError:
+			print >> sys.stderr, "%s does not exsit. Please check it."%(tRF_infor_file)
+			sys.exit(1)
+		
+		# Load predifined tRF merged file
+		trfMergedNameDic = {}
+		trfMergedList = []
+		tRF_merge_file = os.path.join(libraryPath, species, 'annotation.Libs', species+'_tRF_merges.csv')
+		try:
+			with open(tRF_merge_file, 'r') as inf:
+				for line in inf:
+					tmp = line.strip().split(',')
+					mergedName = tmp[0]
+					trfMergedList.append(mergedName)
+					for item in tmp[1].split('/'):
+						trfMergedNameDic.update({item:mergedName})
+		except IOError:
+			print >> sys.stderr, "%s does not exsit. Please check it."%(tRF_merge_file)
+			sys.exit(1)
+	else:
+		trnaStruDic = None
+		trnaAAanticodonDic = None
+		trfContentDic = None
+		duptRNA2UniqueDic = None
+		tRNAtrfDic = None
+		trfMergedNameDic = None
+		trfMergedList = None
+	
 	# Check index files 
 	for type in ['mirna_'+miRNA_database, 'hairpin_'+miRNA_database, 'mrna', 'mature_trna', 'pre_trna', 'snorna', 'rrna', 'ncrna_others']:
 		if os.path.isfile(os.path.join(indexPath, species+'_'+type+'.1.ebwt')):
@@ -200,7 +299,6 @@ def main():
 				for line in inf:
 					if line.strip() not in sampleListRaw:
 						if os.path.isfile(os.path.abspath(line.strip())):
-						#if os.path.isfile(os.path.join(dir,line.strip())):
 							sampleListRaw.append(line.strip())
 						else:
 							print '%s cannot be found, please check the path of the sample file.'%(line.strip())
@@ -271,7 +369,7 @@ def main():
 	print '\nPerforming annotation for all of the collasped sequences...'
 	time_4 = time.time()
 	#numCPU_new = '1'
-	runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, outputdir, logDic, mirna_index, hairpin_index, mature_tRNA_index, pre_tRNA_index, snoRNA_index, rRNA_index, ncrna_others_index, mrna_index, spikeIn, spikeIn_index, gff_output, miRNamePreNameDic, isomiRContentDic, miRNA_database)
+	runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, outputdir, logDic, mirna_index, hairpin_index, mature_tRNA_index, pre_tRNA_index, snoRNA_index, rRNA_index, ncrna_others_index, mrna_index, spikeIn, spikeIn_index, gff_output, miRNamePreNameDic, isomiRContentDic, miRNA_database, trf_output, trnaStruDic, trfContentDic, sampleList)
 	time_5 = time.time()
 	print 'All annotation cycles completed (%.2f sec).\n'%(time_5-time_4)
 
@@ -285,7 +383,7 @@ def main():
 
 	generateReport(outputdir, sampleList, readLengthDic, logDic, annotNameList, seqDic, spikeIn)
 	
-	writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, logDic, seqDic, mirDic, mirNameSeqDic, mirMergedNameDic, bowtieBinary, genome_index, numCPU, phred64, removedMiRNA_ai_List, spikeIn, gff_output, isomiRContentDic, miRNA_database)
+	writeDataToCSV(outputdir, annotNameList, sampleList, isomirDiff, a_to_i, logDic, seqDic, mirDic, mirNameSeqDic, mirMergedNameDic, bowtieBinary, genome_index, numCPU, phred64, removedMiRNA_ai_List, spikeIn, gff_output, isomiRContentDic, miRNA_database, trf_output, trfContentDic, trnaStruDic, pre_tRNA_index, duptRNA2UniqueDic, trnaAAanticodonDic, tRNAtrfDic, trfMergedNameDic, trfMergedList)
 	time_6 = time.time()
 	print 'Summary Complete (%.2f sec)'%(time_6-time_5)
 	print 'Annotation of miRge2.0 Completed (%.2f sec)'%(time_6-time_0)
