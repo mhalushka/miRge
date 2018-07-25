@@ -158,6 +158,9 @@ def main():
 		isomiRContentDic = None
 
 	trf_output = args.trf_output
+	if trf_output and species != "human":
+		print >> sys.stderr, "tRF detection is only supported for the species of human. Please check it."
+		sys.exit(1)
 	if trf_output:
 		# trna_stru_file is the structure of mature tRNA
 		trna_stru_file = os.path.join(libraryPath, species, 'annotation.Libs', species+'_trna.str')
