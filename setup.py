@@ -1,6 +1,3 @@
-"""
-Build mirge.
-"""
 import sys
 import os
 
@@ -28,7 +25,7 @@ setup(
 	license='MIT',
 	package_dir={'': 'src'},
 	packages=find_packages('src', exclude=['.txt']),
-	package_data = {'mirge':['models/*.pkl', 'models/*.txt', 'rScripts/*.R']},
+	package_data = {'mirge2':['models/*.pkl', 'models/*.txt', 'rScripts/*.R']},
 	install_requires=['cutadapt>=1.11', 'biopython>=1.68', 'numpy>=1.11.3',
 	'scipy>=0.17.0', 'matplotlib>=2.1.1', 'pandas>=0.21.1','scikit-learn>=0.18.1',
 	'reportlab>=3.3.0', 

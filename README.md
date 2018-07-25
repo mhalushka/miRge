@@ -1,7 +1,7 @@
 miRge2.0
 ========
 
-A Python program to perform comprehensive analysis of miRNA sequencing Data, including miRNA annotation, A-to-I analysis, novel miRNA detection, isomiR analysis etc.
+A Python program to perform comprehensive analysis of miRNA sequencing Data, including miRNA annotation, A-to-I analysis, novel miRNA detection, isomiR analysis and tRF detection etc.
 
 
 Documentation
@@ -69,13 +69,13 @@ miRge2.0 has two modules: annotate and predict.
     Usage: miRge2.0 annotate [-h] [<args>]
 
     Example:
-    miRge2.0 annotate -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -sp human -ad illumina -ai -gff -cpu 4
+    miRge2.0 annotate -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -sp human -ad illumina -ai -gff -trf -cpu 4
 
     optional arguments:
       -h, --help            show this help message and exit
       -s [sample <required> [sample <required> ...]]
                             two options: 1. A file where each row represents one
-                            sample name; 2. *.fastq *.fastq ... Or *.fastq.gz *.fastq.gz ...
+                            sample name; 2. *.fastq *.fastq ...
       -o <dir>              the directory of the outputs (default: current directory)
       -d <string required>  the miRNA database (default: miRBase. MirGeneDB is optional)
       -pb <dir required>    the path to the system's bowtie binary
@@ -100,6 +100,7 @@ miRge2.0 has two modules: annotate and predict.
                             alignment (default: 1)
       -ai                   switch to calculate of A to I editing (default: off)
       -gff                  switch to output results in gff format (default: off)
+      -trf                  switch to analyze tRNA fragment (default: off)
       --version             show program's version number and exit
 
 
@@ -108,13 +109,13 @@ miRge2.0 has two modules: annotate and predict.
     Usage: miRge2.0 predict [-h] [<args>]
 
     Example:
-    miRge2.0 predict -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -ps /usr/local/bin -pr /usr/local/bin -sp human -ad illumina -ai -gff -cpu 4
+    miRge2.0 predict -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -ps /usr/local/bin -pr /usr/local/bin -sp human -ad illumina -ai -gff -trf -cpu 4
 
     optional arguments:
       -h, --help            show this help message and exit
       -s [sample <required> [sample <required> ...]]
                             two options: 1. A file where each row represents one
-                            sample name; 2. *.fastq *.fastq ... Or *.fastq.gz *.fastq.gz ...
+                            sample name; 2. *.fastq *.fastq ...
       -o <dir>              the directory of the outputs (default: current directory)
       -d <string required>  the miRNA database (default: miRBase. MirGeneDB is optional)
       -pb <dir required>    the path to the system's bowtie binary
@@ -141,6 +142,7 @@ miRge2.0 has two modules: annotate and predict.
                             alignment (default: 1)
       -ai                   switch to calculate of A to I editing (default: off)
       -gff                  switch to output results in gff format (default: off)
+      -trf                  switch to analyze tRNA fragment (default: off)
       -ws <file>            the file containing the overall samples to analysis
                             for novel miRNA prediction. No header, just a list of *.fastq
                             file names in a column. Names of files can be to your choosing
@@ -164,7 +166,8 @@ miRge2.0 has two modules: annotate and predict.
 
 Changelog
 ---------
-**06-15-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The compressed format of fastq files, such as "*.fastq.gz", is supported.
+
+**06-26-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add a `-trf` option, so that tRF detection can be performed.
 
 **05-06-2018**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rebuild the miRNA libraries from the newly released miRBase v22 and MirGeneDB v2.0.
 
@@ -174,4 +177,4 @@ Changelog
 Citation
 --------
 
-Yin Lu, Alexander S. Baras, Marc K Halushka. miRge2.0: An updated tool to comprehensively analyze microRNA sequencing data. bioRxiv.org.
+Yin Lu, Alexander S. Baras, Marc K Halushka. miRge 2.0 for comprehensive analysis of microRNA sequencing data. BMC Bioinformatics. 2018.
