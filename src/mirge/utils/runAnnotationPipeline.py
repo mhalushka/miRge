@@ -4,6 +4,7 @@ import time
 from Bio.Seq import Seq
 from Bio import SeqIO
 from Bio import pairwise2
+import re
 
 def parseBowtieLog(bowtieLog):
 	s1Tmp = 0
@@ -35,6 +36,33 @@ def parseAlignment2(bowtieSam):
 				content = line.strip().split('\t')
 				if content[2] != '*' and content[0][-3:] == 'TTT':
 					alignmentResult.update({content[0]:[content[2], content[1], content[3], content[5]]})
+	return alignmentResult
+
+def parseAlignment3(bowtieSam):
+	alignmentResult = {}
+	with open(bowtieSam, 'r') as inf:
+		for line in inf:
+			if '@' not in line:
+				content = line.strip().split('\t')
+				if content[2] != '*':
+					try:
+						alignmentResult[content[0]].append((content[2], content[1], content[3], content[5]))
+					except KeyError:
+						alignmentResult.update({content[0]:[(content[2], content[1], content[3], content[5])]})
+	return alignmentResult
+
+def parseAlignment4(bowtieSam):
+	alignmentResult = {}
+	with open(bowtieSam, 'r') as inf:
+		for line in inf:
+			if '@' not in line:
+				content = line.strip().split('\t')
+				if content[2] != '*':
+					if content[0][-3:] == 'TTT':
+						try:
+							alignmentResult[content[0]].append((content[2], content[1], content[3], content[5]))
+						except KeyError:
+							alignmentResult.update({content[0]:[(content[2], content[1], content[3], content[5])]})
 	return alignmentResult
 
 def leftDashCount(seq):
@@ -316,6 +344,13 @@ def updateAnnotDic(seqDic, alignmentResult, index):
 			seqDic[seqKey]['annot'][0] = 1
 			seqDic[seqKey]['annot'][index] = alignmentResult[seqKey][0]
 
+def updateAnnotDic2(seqDic, alignmentResult, index, subseqSeqDic):
+	for seqKey in alignmentResult.keys():
+		if alignmentResult[seqKey][0] != '*':
+			for subseq in subseqSeqDic[seqKey]:
+				seqDic[subseq]['annot'][0] = 1
+				seqDic[subseq]['annot'][index] = alignmentResult[seqKey][0]
+
 def inferPremiRName(miRNameCanonical, miRNamePreNameDic, miRNA_database):
 	try:
 		preName = miRNamePreNameDic[miRNameCanonical]
@@ -410,6 +445,101 @@ def updateIsomiRDic2(isomiRContentDic, hairpinNameSeqDic, mirnaLibNameSeqDic, in
 			else:
 				del isomiRContentDic[seqKey]
 
+def trfTypes(seq, tRNAName, start, trnaStruDic, pretrnaNameSeqDic):
+	if 'pre_' not in tRNAName:
+		tRNASeq = trnaStruDic[tRNAName]['seq']
+		tRNAStru = trnaStruDic[tRNAName]['stru']
+		tRNASeqLen = len(tRNASeq)
+		# anticodonStart and anticodonEnd is 1-based position, so change it into 0-based
+		anticodonStart = trnaStruDic[tRNAName]['anticodonStart']-1
+		anticodonEnd = trnaStruDic[tRNAName]['anticodonEnd']-1
+		if start == 0:
+			if start+len(seq) == tRNASeqLen:
+				trfType = 'tRF-whole'
+			elif start+len(seq)-1 >= anticodonStart-2 and start+len(seq)-1 <= anticodonStart+1:
+				trfType = "5'-half"
+			else:
+				trfType = "5'-tRF"
+		else:
+			if start+len(seq)-1 >= tRNASeqLen-1-2 and start+len(seq)-1 <= tRNASeqLen-1:
+				if start >= anticodonStart-1 and start <= anticodonStart+2:
+					trfType = "3'-half"
+				else:
+					trfType = "3'-tRF"
+			else:
+				trfType = 'i-tRF'
+	else:
+		tRNASeq = pretrnaNameSeqDic[tRNAName]
+		trfType = 'tRF-1'
+	return trfType
+
+def updatetrfContentDic(trfContentDic, alignmentResult, trnaStruDic, pretrnaNameSeqDic, NT2CODE):
+	# This function is invalid now.
+	for seqKey in alignmentResult.keys():
+		#if alignmentResult[seqKey][0] != '*':
+		trfContentDic[seqKey]['uid'] = make_id(seqKey, NT2CODE)
+		for item in alignmentResult[seqKey]:
+			tRNAName = item[0]
+			if tRNAName != '*':
+				# item[2] is 1-based, so change it into 0-based
+				startTmp = int(item[2])-1
+				# add tRNAName as a key.
+				trfContentDic[seqKey][tRNAName] = {}
+				# determine the tRF type based on the postion of the tRF for specific tRNA or pre-tRNA-trailer
+				trfContentDic[seqKey][tRNAName]['tRFType'] = trfTypes(seqKey, tRNAName, startTmp, trnaStruDic, pretrnaNameSeqDic)
+				trfContentDic[seqKey][tRNAName]['start'] = startTmp
+				if 'pre_' not in tRNAName:
+					trfContentDic[seqKey][tRNAName]['end'] = startTmp+len(seqKey)-1
+				else:
+					trfContentDic[seqKey][tRNAName]['end'] = startTmp+len(seqKey)-4
+				trfContentDic[seqKey][tRNAName]['cigar'] = 'undifined'
+
+def updatetrfContentDic2(trfContentDic, alignmentResultNew, trnaStruDic, pretrnaNameSeqDic, NT2CODE, seqDic, sampleList):
+	# Deal with the alignment of mature tRNA
+	for seqKey in alignmentResultNew.keys():
+		readCountList = []
+		for i in range(len(sampleList)):
+			readCountList.append(int(seqDic[seqKey]['quant'][i]))
+		trfContentDic.update({seqKey:{'count':readCountList}})
+		trfContentDic[seqKey]['uid'] = make_id(seqKey, NT2CODE)
+		for item in alignmentResultNew[seqKey]:
+			tRNAName = item[0]
+			if tRNAName != '*':
+				# item[2] is 1-based, so change it into 0-based
+				startTmp = int(item[2])-1
+				# add tRNAName as a key.
+				trfContentDic[seqKey][tRNAName] = {}
+				# determine the tRF type based on the postion of the tRF for specific tRNA or pre-tRNA-trailer
+				trfContentDic[seqKey][tRNAName]['tRFType'] = trfTypes(seqKey, tRNAName, startTmp, trnaStruDic, pretrnaNameSeqDic)
+				trfContentDic[seqKey][tRNAName]['start'] = startTmp
+				trfContentDic[seqKey][tRNAName]['end'] = startTmp+len(seqKey)-1
+				trfContentDic[seqKey][tRNAName]['cigar'] = 'undifined'
+
+def updatetrfContentDic3(trfContentDic, alignmentResultNew, trnaStruDic, pretrnaNameSeqDic, NT2CODE, seqDic, sampleList, subseqSeqDic):
+	# Deal with the alignment of precusor tRNA
+	for seqKey in alignmentResultNew.keys():
+		for readSeq in subseqSeqDic[seqKey]:
+			readCountList = []
+			for i in range(len(sampleList)):
+				readCountList.append(int(seqDic[readSeq]['quant'][i]))
+			trfContentDic.update({readSeq:{'count':readCountList}})
+			trfContentDic[readSeq]['uid'] = make_id(readSeq, NT2CODE)
+			for item in alignmentResultNew[seqKey]:
+				tRNAName = item[0]
+				if tRNAName != '*':
+					startTmp = int(item[2])-1
+					trfContentDic[readSeq][tRNAName] = {}
+					trfContentDic[readSeq][tRNAName]['tRFType'] = trfTypes(readSeq, tRNAName, startTmp, trnaStruDic, pretrnaNameSeqDic)
+					trfContentDic[readSeq][tRNAName]['start'] = startTmp
+					numberOfTailT2 = 0
+					for t in readSeq[::-1]:
+						if t == 'T':
+							numberOfTailT2 += 1
+						else:
+							break
+					trfContentDic[readSeq][tRNAName]['end'] = startTmp+len(readSeq)-1-numberOfTailT2
+					trfContentDic[readSeq][tRNAName]['cigar'] = 'undifined'
+
 def writeSeqToAnnot(lengthFilter, seqDic, outputdir):
 	with open(os.path.join(outputdir, 'SeqToAnnot.fasta'), 'w') as outf:
 		for seq in seqDic.keys():
@@ -423,7 +553,17 @@ def writeSeqToAnnot(lengthFilter, seqDic, outputdir):
 				else:
 					outf.write('>'+seq+'\n'+seq+'\n')
 
-def runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, outputdir, logDic, file_mirna, file_hairpin, file_mature_tRNA, file_pre_tRNA, file_snoRNA, file_rRNA, file_ncrna_others, file_mrna, spikeIn, file_spikeIn, gff_output, miRNamePreNameDic, isomiRContentDic, miRNA_database):
+def writetRFToAnnot(tRFsLabelDic, outputdir):
+	with open(os.path.join(outputdir, 'tRFToAnnot.fasta'), 'w') as outf:
+		for seqKey in tRFsLabelDic.keys():
+			if tRFsLabelDic[seqKey] == 0:
+				outf.write('>'+seqKey+'\n'+seqKey+'\n')
+
+def updatetRFsLabelDic(tRFsLabelDic, alignmentResult):
+	for seq in alignmentResult.keys():
+		tRFsLabelDic[seq] = 1
+
+def runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, outputdir, logDic, file_mirna, file_hairpin, file_mature_tRNA, file_pre_tRNA, file_snoRNA, file_rRNA, file_ncrna_others, file_mrna, spikeIn, file_spikeIn, gff_output, miRNamePreNameDic, isomiRContentDic, miRNA_database, trf_output, trnaStruDic, trfContentDic, sampleList):
 	bwtCmd = os.path.join(bowtieBinary, 'bowtie')+' --threads '+numCPU+' '
 	bwtCmd2 = os.path.join(bowtieBinary, 'bowtie-inspect ')
 	#bwtCmd = bowtieBinary+"bowtie --threads "+numCPU+' '
@@ -432,11 +572,12 @@ def runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, 
 		bwtCmd = bwtCmd + ' --phred64-quals '
 	if spikeIn:
 		lengthFilters = [-26, 25, 0, 0, 0, 0, 0, 0, 0, 0]
+		rnaLibrary = ['miRNA', 'hairpin', 'mature tRNA', 'precusor tRNA', 'snoRNA', 'rRNA', 'ncrna others', 'mRNA', 'isomiR', 'spikeIn']
 		bwtCmdLines = [
 		bwtCmd+file_mirna+' -n 0 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
 		bwtCmd+file_hairpin+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
-		bwtCmd+file_mature_tRNA+' -v 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
-		bwtCmd+file_pre_tRNA+' -v 0 -3 3 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
+		bwtCmd+file_mature_tRNA+' -v 1 -f -a --best --strata --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
+		'Multiple processings will be perfromed',
 		bwtCmd+file_snoRNA+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
 		bwtCmd+file_rRNA+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
 		bwtCmd+file_ncrna_others+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
@@ -445,11 +586,12 @@ def runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, 
 		bwtCmd+file_spikeIn+' -n 0 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log')]
 	else:
 		lengthFilters = [-26, 25, 0, 0, 0, 0, 0, 0, 0]
+		rnaLibrary = ['miRNA', 'hairpin', 'mature tRNA', 'precusor tRNA', 'snoRNA', 'rRNA', 'ncrna others', 'mRNA', 'isomiR']
 		bwtCmdLines = [
 		bwtCmd+file_mirna+' -n 0 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
 		bwtCmd+file_hairpin+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
-		bwtCmd+file_mature_tRNA+' -v 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
-		bwtCmd+file_pre_tRNA+' -v 0 -3 3 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
+		bwtCmd+file_mature_tRNA+' -v 1 -f -a --best --strata --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
+		'Multiple processings will be perfromed',
 		bwtCmd+file_snoRNA+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
 		bwtCmd+file_rRNA+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
 		bwtCmd+file_ncrna_others+' -n 1 -f --norc -S '+os.path.join(outputdir, 'SeqToAnnot.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log'),
@@ -459,7 +601,7 @@ def runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, 
 	# -- ALIGNMENT 1 -- length < 26, up to 0 mismatch to miRNA
 	# -- ALIGNMENT 2 -- length > 25, up to 1 mismatch to hairpin
 	# -- ALIGNMENT 3 -- any length, up to 1 mismatch to mature tRNA
-	# -- ALIGNMENT 4 -- any length, up to 0 mismatch with special 3 prime considerations t0 primary tRNA 3' trailer 
+	# -- ALIGNMENT 4 -- any length, up to 0 mismatch with special 3 prime considerations to primary tRNA 3' trailer 
 	# -- ALIGNMENT 5, 6, 7 -- any length, up to 1 mismatch to snoRNA, rRNA and ncrna others
 	# -- ALIGNMENT 8 -- any length, up to 0 mismatch to mRNA
 	# -- ALIGNMENT 9 -- any length, up to 2 mismatches with special 5 and 3 prime considerations to miRNA (isoMiR)
@@ -475,7 +617,7 @@ def runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, 
 			mirnaLibNameSeqDic.update({record.id:str(record.seq)})
 		os.system('rm %s'%(os.path.join(outputdir, 'hairpinTmp.fa')))
 		os.system('rm %s'%(os.path.join(outputdir, 'mirnaTmp.fa')))
-		NT2CODE = {'AAA': '@', 'AAC': 'f', 'AAG': 'c', 'AAT': 'o', 'ACA': 'l', 'ACC': 'a', 'ACG': 'd', 'ACT': 's',
+	NT2CODE = {'AAA': '@', 'AAC': 'f', 'AAG': 'c', 'AAT': 'o', 'ACA': 'l', 'ACC': 'a', 'ACG': 'd', 'ACT': 's',
                    'AGA': 'm', 'AGC': 'k', 'AGG': 'h', 'AGT': 'w', 'ATA': 'g', 'ATC': 'e', 'ATG': 'b', 'ATT': 'p',
                    'CAA': 'v', 'CAC': 't', 'CAG': 'D', 'CAT': 'n', 'CCA': 'x', 'CCC': '#', 'CCG': 'y', 'CCT': 'i',
                    'CGA': 'C', 'CGC': 'E', 'CGG': 'G', 'CGT': 'S', 'CTA': 'r', 'CTC': 'j', 'CTG': 'q', 'CTT': 'H',
@@ -484,42 +626,82 @@ def runAnnotationPipeline(bowtieBinary, seqDic, numCPU, phred64, annotNameList, 
                    'TAA': 'L', 'TAC': 'N', 'TAG': 'J', 'TAT': 'z', 'TCA': 'U', 'TCC': '9', 'TCG': 'P', 'TCT': '0',
                    'TGA': '7', 'TGC': 'I', 'TGG': 'u', 'TGT': 'B', 'TTA': 'Q', 'TTC': 'O', 'TTG': 'R', 'TTT': '%'}
 
+	if trf_output:
+		os.system(bwtCmd2+file_pre_tRNA+' > '+os.path.join(outputdir, 'pretrnaTmp.fa'))
+		pretrnaNameSeqDic = {}
+		for record in SeqIO.parse(os.path.join(outputdir, 'pretrnaTmp.fa'), 'fasta'):
+			pretrnaNameSeqDic.update({record.id:str(record.seq)})
+		os.system('rm %s'%(os.path.join(outputdir, 'pretrnaTmp.fa')))
+
 	for i in range(len(lengthFilters)):
 		writeSeqToAnnot(lengthFilters[i], seqDic, outputdir)
 		# run aligment
 		#print "Starting Annotation-%s"%(annotNameList[i])
 		dicRmp = {}
 		time_tmp1 = time.time()
-		#print bwtCmdLines[i]
-		alignmentStatus = os.system(bwtCmdLines[i])
-		#print alignmentStatus
-		#alignmentStatus = alignmentStatus >> 8
-		time_tmp2 = time.time()
-		dicRmp.update({'cpuTime': time_tmp2-time_tmp1})
-		
-		# parse alignment completed without error
-		if alignmentStatus == 0:
-			s1, s2 = parseBowtieLog(os.path.join(outputdir, 'SeqToAnnot.log'))
-			#print s1
-			#print s2
-			dicRmp.update({'readsProcessed': s1})
-			dicRmp.update({'readsAligned':s2})
-			if i != 3:
+		if i != 3:
+			alignmentStatus = os.system(bwtCmdLines[i])
+			time_tmp2 = time.time()
+			dicRmp.update({'cpuTime': time_tmp2-time_tmp1})
+			# parse alignment completed without error
+			if alignmentStatus == 0:
+				s1, s2 = parseBowtieLog(os.path.join(outputdir, 'SeqToAnnot.log'))
+				dicRmp.update({'readsProcessed': s1})
+				dicRmp.update({'readsAligned':s2})
 				alignmentResult = parseAlignment(os.path.join(outputdir, 'SeqToAnnot.sam'))
+				updateAnnotDic(seqDic, alignmentResult, i+1)
+				if gff_output:
+					if i == 0 or i == 8:
+						updateIsomiRDic(isomiRContentDic, alignmentResult, miRNamePreNameDic, i, NT2CODE, miRNA_database)
+						updateIsomiRDic2(isomiRContentDic, hairpinNameSeqDic, mirnaLibNameSeqDic, i, miRNamePreNameDic, miRNA_database)
+				if i == 2 and trf_output:
+					# update mature tRNA reads into trfContentDic
+					alignmentResultNew = parseAlignment3(os.path.join(outputdir, 'SeqToAnnot.sam'))
+					updatetrfContentDic2(trfContentDic, alignmentResultNew, trnaStruDic, pretrnaNameSeqDic, NT2CODE, seqDic, sampleList)
 			else:
-				# process the alignment specially for pre-tRNA-trailer.
-				alignmentResult = parseAlignment2(os.path.join(outputdir, 'SeqToAnnot.sam'))
-			updateAnnotDic(seqDic, alignmentResult, i+1)
-			if gff_output:
-				if i == 0 or i == 8:
-					updateIsomiRDic(isomiRContentDic, alignmentResult, miRNamePreNameDic, i, NT2CODE, miRNA_database)
-					updateIsomiRDic2(isomiRContentDic, hairpinNameSeqDic, mirnaLibNameSeqDic, i, miRNamePreNameDic, miRNA_database)
+				print "Alignment to library %s exited with none-zero status.\n"%(rnaLibrary[i])
+				sys.exit(1)
 		else:
-			print "Alignment exited with none-zero status.\n"
-			sys.exit(1)
+			# Step1: Keep the reads that ends with ploy-Ts (>= 3 Ts at 5'-end).
+			outfTmp = open(os.path.join(outputdir, 'SeqToAnnot2.fasta'), 'w')
+			subseqSeqDic = {}
+			with open(os.path.join(outputdir, 'SeqToAnnot.fasta'), 'r') as infTmp:
+				for line in infTmp:
+					if line[0] != '>':
+						readseq = line.strip()
+						if not (re.search('T{3,}$', readseq) is None):
+							numberOfTailT = 0
+							for t in readseq[::-1]:
+								if t == 'T':
+									numberOfTailT += 1
+								else:
+									break
+							readSubseq = readseq[:-numberOfTailT]
+							if len(readSubseq) >= 11:
+								outfTmp.write('>'+readSubseq+'\n'+readSubseq+'\n')
+								try:
+									subseqSeqDic[readSubseq].append(readseq)
+								except KeyError:
+									subseqSeqDic.update({readSubseq:[readseq]})
+			outfTmp.close()
+			# Step2: Align the reads that ends with ploy-Ts (>= 3 Ts at 5'-end) to the precusor tRNA libary.
+			bwtCmdTmp = os.path.join(bowtieBinary, 'bowtie')+' --threads '+numCPU+' '+file_pre_tRNA+' -v 0 -f  -a --best --strata --norc -S '+os.path.join(outputdir, 'SeqToAnnot2.fasta')+' 1> '+os.path.join(outputdir, 'SeqToAnnot.sam')+' 2> '+os.path.join(outputdir, 'SeqToAnnot.log')
+			alignmentStatus = os.system(bwtCmdTmp)
+			time_tmp2 = time.time()
+			dicRmp.update({'cpuTime': time_tmp2-time_tmp1})
+			if alignmentStatus == 0:
+				s1, s2 = parseBowtieLog(os.path.join(outputdir, 'SeqToAnnot.log'))
+				dicRmp.update({'readsProcessed': s1})
+				dicRmp.update({'readsAligned':s2})
+				alignmentResult = parseAlignment(os.path.join(outputdir, 'SeqToAnnot.sam'))
+				updateAnnotDic2(seqDic, alignmentResult, i+1, subseqSeqDic)
+				if trf_output:
+					# update precusor tRNA reads into trfContentDic
+					alignmentResultNew = parseAlignment3(os.path.join(outputdir, 'SeqToAnnot.sam'))
+					updatetrfContentDic3(trfContentDic, alignmentResultNew, trnaStruDic, pretrnaNameSeqDic, NT2CODE, seqDic, sampleList, subseqSeqDic)
+			else:
+				print "Alignment to library %s exited with none-zero status.\n"%(rnaLibrary[i])
+				sys.exit(1)
 		logDic['annotStats'].append(dicRmp)
-		#os.system('mv %s %s'%(os.path.join(outputdir, 'SeqToAnnot.fasta'), os.path.join(outputdir, 'SeqToAnnot_'+str(i)+'.fasta')))
-		#os.system('mv %s %s'%(os.path.join(outputdir, 'SeqToAnnot.sam'), os.path.join(outputdir, 'SeqToAnnot_'+str(i)+'.sam')))
-		#os.system('mv %s %s'%(os.path.join(outputdir, 'SeqToAnnot.log'), os.path.join(outputdir, 'SeqToAnnot_'+str(i)+'.log')))
 	# Remove the intermediate files
-	os.system('rm %s %s %s'%(os.path.join(outputdir, 'SeqToAnnot.fasta'), os.path.join(outputdir, 'SeqToAnnot.sam'), os.path.join(outputdir, 'SeqToAnnot.log')))
+	os.system('rm %s %s %s %s'%(os.path.join(outputdir, 'SeqToAnnot.fasta'), os.path.join(outputdir, 'SeqToAnnot.sam'), os.path.join(outputdir, 'SeqToAnnot.log'), os.path.join(outputdir, 'SeqToAnnot2.fasta')))

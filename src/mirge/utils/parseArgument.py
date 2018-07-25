@@ -11,14 +11,14 @@ def parseArgument():
 ##                                                                              ##\n\
 ##      miRge2.0 (Comprehensive analysis of miRNA sequencing Data)              ##\n\
 ##                                                                              ##\n\
-##      last change: 05/06/2018                                                 ##\n\
+##      last change: 06/26/2018                                                 ##\n\
 ##                                                                              ##\n\
 ##                                                                              ##\n\
 ##################################################################################\n\
 \n'.format('##################################################################################'.ljust(len('usage:')))
 	#create top-level parser
 	usage = usageTmp+'Usage: %(prog)s <command> [<args>]\n\
-The two functions of miRge2.0 are:\n\
+The two functions of miRge2.0are:\n\
    annotate      Annotate the reads from miRNA sequencing data\n\
                  Type "miRge2.0 annotate -h" to show the help message of this funtion\n\
    predict       Detect novel miRNAs from miRNA sequencing data\n\
@@ -26,7 +26,7 @@ The two functions of miRge2.0 are:\n\
 	parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter, description=usage, usage=argparse.SUPPRESS)
 	subparsers = parser.add_subparsers(help='sub-command help')
 	#create the parser for the 'annotate' command
-	usage1 = usageTmp+'Usage: miRge2.0 annotate [-h] [<args>]\n\nExample:\nmiRge2.0 annotate -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -sp human -ad illumina -ai -gff -cpu 4\n'
+	usage1 = usageTmp+'Usage: miRge2.0 annotate [-h] [<args>]\n\nExample:\nmiRge2.0 annotate -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -sp human -ad illumina -ai -gff -trf -cpu 4\n'
 	#print usage1
 	parser_1 = subparsers.add_parser('annotate', usage = usage1)
 	parser_1.add_argument('-s', nargs='*', required=True, dest='sampleList', metavar='sample <required>', help='two options: 1. A file where each row represents one sample name;  2. *.fastq *.fastq ... Or *.fastq.gz *.fastq.gz ...')
@@ -49,9 +49,10 @@ The two functions of miRge2.0 are:\n\
 	parser_1.add_argument('-ai', dest='a_to_i', action = 'store_true', help='switch to calculate of A to I editing (default: off)')
 	#parser_1.add_argument('-mre', default='none', dest='miRNAs_in_repetitive_element', metavar='<file>', help='The file that contains the miRNA name located at repetetive element regions (compulsory when -ai is turned on). There will be no repetive element infromation if omitted')
 	parser_1.add_argument('-gff', dest='gff_output', action = 'store_true', help='switch to output results in gff format (default: off)')
+	parser_1.add_argument('-trf', dest='trf_output', action = 'store_true', help='switch to analyze tRNA fragment (default: off)')
 	parser_1.add_argument('--version', action='version', version='%s'%(version))
 	#create the parser for the 'predict' command
-	usage2 = usageTmp+'Usage: miRge2.0 predict [-h] [<args>]\n\nExample:\nmiRge2.0 predict -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -ps /usr/local/bin -pr /usr/local/bin -sp human -ad illumina -ai -gff -cpu 4\n'
+	usage2 = usageTmp+'Usage: miRge2.0 predict [-h] [<args>]\n\nExample:\nmiRge2.0 predict -s seq_file.fastq -d miRBase -pb /home/yin/tools/bowtie-1.1.1 -lib /home/yin/miRge.Libs -ps /usr/local/bin -pr /usr/local/bin -sp human -ad illumina -ai -gff -trf -cpu 4\n'
 	parser_2 = subparsers.add_parser('predict', usage =usage2)
 	parser_2.add_argument('-s', nargs='*', required=True, dest='sampleList', metavar='sample <required>', help='two options: 1. A file where each row represents one sample name;  2. *.fastq *.fastq ... Or *.fastq.gz *.fastq.gz ...')
 	parser_2.add_argument('-o', default=dir_tmp, dest='output_dir', metavar='<dir>', help='the directory of the outputs (default: current directory)')
@@ -80,6 +81,7 @@ The two functions of miRge2.0 are:\n\
 	parser_2.add_argument('-ai', dest='a_to_i', action = 'store_true', help='switch to calculate of A to I editing (default: off)')
 	#parser_2.add_argument('-mre', default='none', dest='miRNAs_in_repetitive_element', metavar='<file>', help='The file that contains the miRNA name located at repetetive element regions (compulsory when -ai is turned on)')
 	parser_2.add_argument('-gff', dest='gff_output', action = 'store_true', help='switch to output results in gff format (default: off)')
+	parser_2.add_argument('-trf', dest='trf_output', action = 'store_true', help='switch to analyze tRNA fragment (default: off)')
 	parser_2.add_argument('-ws',  default='none', dest ='wideSampleListFile', metavar='<file>', help='the file containing the overall samples to analysis for novel miRNA prediction. No header, just a list of *.fastq file names in a column. Names of files can be to your choosing (e.g. filestochecknovel.txt)')
 	parser_2.add_argument('-minl', default='16', dest ='minLength', metavar='<int>', help='the minimum length of the reatined reads for novel miRNA detection (default: 16)')
 	parser_2.add_argument('-maxl', default='25', dest='maxLength', metavar='<int>', help='the maximum length of the reatined reads for novel miRNA detection (default: 25)')

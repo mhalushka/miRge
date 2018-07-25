@@ -77,10 +77,13 @@ class TableBarChart2(_DrawingEditorMixin,Drawing):
 			if interval == 0:
 				interval = max([int(item) for item in xList])-min([int(item) for item in xList])
 		for i in range(len(xList)):
-			if i%interval == 0:
+			try:
+				if i%interval == 0:
+					xListNew.append(xList[i])
+				else:
+					xListNew.append('')
+			except ZeroDivisionError:
 				xListNew.append(xList[i])
-			else:
-				xListNew.append('')
 		self.chart.categoryAxis.categoryNames = xListNew
 		self.chart.categoryAxis.labels.fontSize = 2.8*2.5
 		self.chart.categoryAxis.labels.fontName = 'Helvetica-Bold'
