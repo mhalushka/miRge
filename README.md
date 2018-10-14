@@ -177,4 +177,4 @@ Changelog
 Citation
 --------
 
-Yin Lu, Alexander S. Baras, Marc K Halushka. miRge 2.0 for comprehensive analysis of microRNA sequencing data. BMC Bioinformatics. 2018.
+Yin Lu, Alexander S. Baras, Marc K Halushka. miRge 2.0 for comprehensive analysis of microRNA sequencing data. <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2287-y" target="_blank">BMC Bioinformatics</a>. 2018.
