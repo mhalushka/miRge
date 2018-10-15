@@ -34,7 +34,8 @@ If the users want to build the libraries for other species, they can use scripts
 ### Install miRge2.0
 
 miRge2.0 is implemented as a Python program running on a Linux/Unix platform that requires pre-installation of Bowtie (v1.1.1 or v1.1.2; http://bowtie-bio.sourceforge.net/index.shtml), SAMtools (v1.5; http://samtools.sourceforge.net/) and RNAfold (v2.3.5; http://www.tbi.univie.ac.at/RNA). <br />
-It was built with Python (v2.7.*) programming language and Python-related libraries, including cutadapt(>= v1.11), biopython(>= v1.68), numpy(>= v1.11.3), scipy(>= v0.17.0), matplotlib(>= v2.1.1), pandas(>= v0.21.0), sklearn(>= v0.18.1), reportlab(>= v3.3.0) and forgi(v0.20). <br />
+It was built with Python (v2.7.*) programming language and Python-related libraries, including cutadapt(v1.11 to v1.16), biopython(>= v1.68), numpy(>= v1.11.3), scipy(>= v0.17.0), matplotlib(>= v2.1.1), pandas(>= v0.21.0), sklearn(>= v0.18.1), reportlab(>= v3.3.0) and forgi(v0.20). <br />
+PLEASE NOTE: miRge2.0 is currently incompatible with cutadapt v1.18<br />
 The source code is hosted at: https://github.com/mhalushka/miRge.<br />
 
 miRge2.0 is available in bioconda now and can be installed via conda. You will need to add the bioconda channel as well as the other channels bioconda depends on. It is important to add them in this order so that the priority is set correctly (that is, bioconda is highest priority).<br />
