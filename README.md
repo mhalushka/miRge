@@ -47,7 +47,7 @@ miRge2.0 is available in bioconda now and can be installed via conda. You will n
 Then install mirge by running:<br />
     `conda install mirge`<br />
 
-miRge2.0 also can be installed from the source code by pip:<br />
+miRge2.0 also can be installed from the source code by pip (THIS VERSION IS CURRENTLY UNDER REVISION. USE BIOCONDA FOR AN ACCURATE INSTALL UNTIL THIS MESSAGE DISAPPEARS):<br />
 1) Download miRge2.0 source code from https://github.com/mhalushka/miRge and unzip the zipped file folder.<br />
 2) If the package of wheel is not installed, run `pip install wheel` to install it.<br />
 3) Change the directory to miRge2.0's directory and run `python setup.py bdist_wheel` to build a wheel file for the subsequent installation via pip.<br />
