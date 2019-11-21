@@ -92,7 +92,7 @@ miRge2.0 has two modules: annotate and predict.
                             Users can set it between 0 and 0.5 (default: 0.1)
       -ad <string>          the adapter need to be removed which could be
                             illumina, ion or a defined sequence (default: none)
-      -phred64              phred64 format (default: 64)
+      -phred64              phred64 format (default: 33)
       -spikeIn              switch to annotate spike-ins if the bowtie index files
                             are loacted at the path of bowtie's index
                             files (default: off)
@@ -134,7 +134,7 @@ miRge2.0 has two modules: annotate and predict.
                             Users can set it between 0 and 0.5 (default: 0.1)
       -ad <string>          the adapter need to be removed which could be
                             illumina, ion or a defined sequence (default: none)
-      -phred64              phred64 format (default: 64)
+      -phred64              phred64 format (default: 33)
       -spikeIn              switch to annotate spike-ins if the bowtie index files
                             are loacted at the path of bowtie's index
                             files (default: off)
