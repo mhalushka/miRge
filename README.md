@@ -27,7 +27,16 @@ miRge2.0 relies on a huge number of libraries like: <br />
 2) Sequences of genome, mature miRNAs (including SNP information) in miRBase and miRGeneDB <br />
 3) Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase and MirGeneDB <br />
 
-Libraries of six species including ___human___, ___mouse___, ___rat___, ___zebrafish___, ___nematode___ and ___fruitfly___ can be downloaded separately by wget. `wget -O human.tar.gz https://jh.box.com/shared/static/rj7ufy5v15uw7ytsyyrsryw99u7ml82j.gz`; <br />`wget -O mouse.tar.gz https://jh.box.com/shared/static/z2bcey8j9e9nxnvpmb4fm88zzq3da4m1.gz`; <br />`wget -O rat.tar.gz https://jh.box.com/shared/static/mmztv42j8h7snk0eo80o7a7t30it4q9f.gz`; <br />`wget -O zebrafish.tar.gz https://jh.box.com/shared/static/nwn7jzn5ekgm51k7jlk43a6h75aasgr1.gz`; <br />`wget -O nematode.tar.gz https://jh.box.com/shared/static/boubl0g28b0xj952e8bhfmbds056gdvi.gz`; <br />`wget -O fruitfly.tar.gz https://jh.box.com/shared/static/ilrnq62cp06pviir5t0mh85aqet0fmjq.gz`.
+Libraries of six species including ___human___, ___mouse___, ___rat___, ___zebrafish___, ___nematode___ and ___fruitfly___ can be downloaded separately. They moved storage and they can be obtained using these links
+
+Human: https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EUkL2ZbRpKRXJpemY32dObgBCyiiPbIiuzKCglrtBUIsFA?e=UIqTDC
+Mouse: https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EcoSDcx9DxNb295CfKEdEhYBiYNWnuZLAuYKBHYVjfjSfA?e=dXPGbS
+Rat : https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/ET3zIO3qDY1bTwLqYZ50MnIBchdOkG8BKtF0Lf2epIeEHA?e=rBkXv3
+Zebrafish : https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EZ88aXFvLthRX6b-TaawAPoB1wxSV0cLL-EOpG9HsmQlSw?e=K2WmKe
+Nematode : https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/Eczh_ADH8cRfMRBy9PIXS20Bv2HBBYlv3zSYcMoQihzvCQ?e=Rj1vhp
+Fruitfly : https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EUme-YXTWw5c7ywnOI5OLQ0B-_itElNcKQ3hFFFO3x8aBw?e=qwR9B0
+
+
 After unpacking the downloaded ***.tar.gz files to the new directory of miRge.Libs, the folder named by species contains three folders: index.Libs (libraries Part 1), fasta.Libs (libraries Part 2) and annotation.Libs (libraries Part 3). The absolute directory of miRge.Libs is used as the value of parameter ‘-lib’ in miRge2.0. <br /><br />
 If the users want to build the libraries for other species, they can use scripts miRge_bowtie_build.py and miRge_pckls_build.py which can be downloaded from https://github.com/mhalushka/miRge_build, wherein miRge_bowtie_build.py is used to build bowtie index files and miRge_pckls_build.py is used to transform ***_genome_repeats.GTF and ***_genome.fa in oder to accelerate the speed of reading larg files into memory. 
 
