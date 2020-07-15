@@ -27,14 +27,14 @@ miRge2.0 relies on a huge number of libraries like: <br />
 2) Sequences of genome, mature miRNAs (including SNP information) in miRBase and miRGeneDB <br />
 3) Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase and MirGeneDB <br />
 
-Libraries of six species including ___human___, ___mouse___, ___rat___, ___zebrafish___, ___nematode___ and ___fruitfly___ can be downloaded separately. They moved storage and they can be obtained using these links
+Libraries of six species including ___human___, ___mouse___, ___rat___, ___zebrafish___, ___nematode___ and ___fruitfly___ can be downloaded separately. They moved storage and they can be obtained using these links:
 
-[Human:](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EUkL2ZbRpKRXJpemY32dObgBCyiiPbIiuzKCglrtBUIsFA?e=UIqTDC) <br />
-[Mouse:](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EcoSDcx9DxNb295CfKEdEhYBiYNWnuZLAuYKBHYVjfjSfA?e=dXPGbS) <br />
-[Rat :](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/ET3zIO3qDY1bTwLqYZ50MnIBchdOkG8BKtF0Lf2epIeEHA?e=rBkXv3) <br />
-[Zebrafish:](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EZ88aXFvLthRX6b-TaawAPoB1wxSV0cLL-EOpG9HsmQlSw?e=K2WmKe) <br />
-[Nematode:](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/Eczh_ADH8cRfMRBy9PIXS20Bv2HBBYlv3zSYcMoQihzvCQ?e=Rj1vhp) <br />
-[Fruitfly:](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EUme-YXTWw5c7ywnOI5OLQ0B-_itElNcKQ3hFFFO3x8aBw?e=qwR9B0) <br />
+[Human](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EUkL2ZbRpKRXJpemY32dObgBCyiiPbIiuzKCglrtBUIsFA?e=UIqTDC) <br />
+[Mouse](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EcoSDcx9DxNb295CfKEdEhYBiYNWnuZLAuYKBHYVjfjSfA?e=dXPGbS) <br />
+[Rat](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/ET3zIO3qDY1bTwLqYZ50MnIBchdOkG8BKtF0Lf2epIeEHA?e=rBkXv3) <br />
+[Zebrafish](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EZ88aXFvLthRX6b-TaawAPoB1wxSV0cLL-EOpG9HsmQlSw?e=K2WmKe) <br />
+[Nematode](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/Eczh_ADH8cRfMRBy9PIXS20Bv2HBBYlv3zSYcMoQihzvCQ?e=Rj1vhp) <br />
+[Fruitfly](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EUme-YXTWw5c7ywnOI5OLQ0B-_itElNcKQ3hFFFO3x8aBw?e=qwR9B0) <br />
 
 
 After unpacking the downloaded ***.tar.gz files to the new directory of miRge.Libs, the folder named by species contains three folders: index.Libs (libraries Part 1), fasta.Libs (libraries Part 2) and annotation.Libs (libraries Part 3). The absolute directory of miRge.Libs is used as the value of parameter ‘-lib’ in miRge2.0. <br /><br />
