@@ -27,7 +27,7 @@ miRge2.0 relies on a huge number of libraries like: <br />
 2) Sequences of genome, mature miRNAs (including SNP information) in miRBase and miRGeneDB <br />
 3) Corrdinates of repetitive elements and mature miRNAs in the genome and miRNA merge information in miRBase and MirGeneDB <br />
 
-Libraries of six species including ___human___, ___mouse___, ___rat___, ___zebrafish___, ___nematode___ and ___fruitfly___ can be downloaded separately. They moved storage and they can be obtained using these links:
+Libraries of six species including ___human___, ___mouse___, ___rat___, ___zebrafish___, ___nematode___ and ___fruitfly___ can be downloaded separately. Our institution changed storage option and they can now be obtained using these links:
 
 [Human](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EUkL2ZbRpKRXJpemY32dObgBCyiiPbIiuzKCglrtBUIsFA?e=UIqTDC) <br />
 [Mouse](https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/mhalush1_jh_edu/EcoSDcx9DxNb295CfKEdEhYBiYNWnuZLAuYKBHYVjfjSfA?e=dXPGbS) <br />
