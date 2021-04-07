@@ -3,6 +3,10 @@ miRge2.0
 
 A Python program to perform comprehensive analysis of miRNA sequencing Data, including miRNA annotation, A-to-I analysis, novel miRNA detection, isomiR analysis and tRF detection etc.
 
+:warning:ATTENTION:
+==========
+**The latest software update of [miRge](https://github.com/mhalushka/miRge3.0) is now available with much more advanced features, including support to Python3.0 and improvised speed performance. Check the documentation of miRge3.0 [here](https://mirge3.readthedocs.io/).**
+
 
 Documentation
 -------------
