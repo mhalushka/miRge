@@ -195,3 +195,4 @@ Citation
 --------
 
 Yin Lu, Alexander S. Baras, Marc K Halushka. miRge 2.0 for comprehensive analysis of microRNA sequencing data. <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2287-y" target="_blank">BMC Bioinformatics</a>. 2018.
+Monika M Looney, Yin Lu, Petros C Karakousis, Marc K Halushka. Mycobacterium tuberculosis Infection Drives Mitochondria-Biased Dysregulation of Host Transfer RNA–Derived Fragments. <a href="https://academic.oup.com/jid/article-abstract/223/10/1796/5909842?login=false" target="_blank">The Journal of Infectious Diseases</a>. 2021. (The tRF detection method is introduced in this paper)
